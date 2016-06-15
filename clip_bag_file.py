@@ -1,10 +1,29 @@
 #!/usr/bin/python
 
 """
-This script clips a bag file using a start and end time (in seconds) within the file. 
+This script may be used to clip bag files by specifying the start
+and end times of the clip in seconds. A clip generated from a bag
+file will be created within the same folder as the bag file, with
+the same name, but with a .clipped extension (instead of .bag). 
 
 Usage for single file: $ clip_bag_file.py single [in_file] [start time (s)] [end time (s)]
+    Parameters: 
+        in_file - The bag file to be read. 
+        start time - The start time of the clip in seconds. 
+        end time - The end time of the clip in seconds. 
+
 Usage for multiple files: $ clip_bag_file.py multiple [txt file with info]
+    Parameters: 
+        txt file with info - A text file where each line contains information
+            about a bag file to be clipped in the following
+            format:
+
+            bag_file_1_name:clip_start_time;clip_end_time
+            bag_file_2_name:clip_start_time;clip_end_time
+            .
+            .
+            .
+            bag_file_n_name:clip_start_time;clip_end_time
 
 Author: Rodolfo Corona, rcorona@utexas.edu
 """
