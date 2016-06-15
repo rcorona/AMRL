@@ -32,6 +32,8 @@ import matplotlib.pyplot as plt
 from scipy.misc import imread
 import matplotlib.cbook as cbook
 from math import sqrt
+import math
+import numpy as np
 
 """
 Reads and returns coordinate lists from a label
@@ -131,6 +133,39 @@ def get_coordinates_in_meters(TL, BR, lat_points, long_points):
     return [x_points, y_points, width, height]
 
 """
+Creates a grid given a square bin length along with 
+the height and width of the total map plot for visualization. 
+Returns a list of labels pertaining to the xy pairs given. 
+These labels may be used for training. 
+"""
+def grid_and_labels_from_bin_size(bin_length, figure, width, height, x_points, y_points):
+    #Rounds up for even dimmensions. 
+    width = int(math.ceil(width))
+    height = int(math.ceil(height))
+    
+    #Sets grid on plot for visualization. 
+    axes = figure.gca()
+    axes.set_xticks(np.arange(0, width, bin_length))
+    axes.set_yticks(np.arange(0, height, bin_length))
+    plt.grid()
+
+    #Gets dimmensions for bin matrix representation. 
+    num_columns = abs(width / bin_length) + (1 if width % bin_length else 0)
+    num_rows = (height / bin_length) + (1 if height % bin_length else 0)
+
+    #Gets labels for each xy pair pertaining to bin numbers.  
+    labels = []
+
+    for i in range(len(x_points)):
+        column = int(x_points[i]) / bin_length
+        row = int(y_points[i]) / bin_length
+
+        label = (row * num_columns) + column
+        labels.append(label)
+
+    return labels
+    
+"""
 Overlays a map onto gps coordinate points using
 a map specification file and a file containing
 gps coordinate points. 
@@ -156,13 +191,20 @@ def overlay(overlay_specs_file, coordinate_file_name):
     x_points, y_points, width, height = get_coordinates_in_meters(TL, BR, lat_points, long_points)
 
     #Loads map image onto plot using corner coordinates. 
+    figure = plt.figure()
     map_img_file = imread(map_img_name)
-
     plt.imshow(map_img_file, zorder=0, extent=[0.0, width, 0.0, height])
 
     #Plots coordinate points and shows plot. 
     plt.plot(x_points, y_points, 'ro')
 
+    #Creates grid that will correspond to location bins to train NN.
+    #Also generates labels associated with the bins. 
+    labels = grid_and_labels_from_bin_size(5, figure, width, height, x_points, y_points)
+
+    #TODO write labels to file. 
+
+    #Presents the plot. 
     plt.show()
 
 if __name__ == "__main__":
