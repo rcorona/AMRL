@@ -31,6 +31,7 @@ from geopy.distance import VincentyDistance
 import matplotlib.pyplot as plt
 from scipy.misc import imread
 import matplotlib.cbook as cbook
+from math import sqrt
 
 """
 Reads and returns coordinate lists from a label
@@ -46,8 +47,8 @@ def coordinates_from_label_file(label_file_name):
 
     for line in label_file:
         values = line.split(';')
-        latitude = float(values[0])
-        longitude = float(values[1])
+        latitude = float(values[1])
+        longitude = float(values[0])
 
         long_points.append(longitude)
         lat_points.append(latitude)
@@ -104,6 +105,32 @@ def read_in_overlay_specs(overlay_specs_file):
     return [map_img_name, BR, TL]
 
 """
+Takes the top left and bottom right corners of the coordinate plane
+in gps coordinates as well as lists of latitude and longitude
+points to translate into a coordinate system. (0,0) will map to
+the bottom left corner of the image. 
+"""
+def get_coordinates_in_meters(TL, BR, lat_points, long_points):
+    x_points = []
+    y_points = []
+
+    height = float(VincentyDistance((BR[0], TL[1]), (TL[0], TL[1])).meters)
+    width = float(VincentyDistance((BR[0], TL[1]), (BR[0], BR[1])).meters)
+
+    #Translates each coordinate point based on formula below. 
+    for i in range(len(lat_points)):
+        h = float(VincentyDistance((BR[0], TL[1]), (lat_points[i], long_points[i])).meters)
+        e = float(VincentyDistance((BR[0], BR[1]), (lat_points[i], long_points[i])).meters)
+
+        x = ((h ** 2) + (width ** 2) - (e ** 2)) / (2 * width)
+        y = sqrt((h ** 2) - (x ** 2))
+
+        x_points.append(x)
+        y_points.append(y)
+
+    return [x_points, y_points, width, height]
+
+"""
 Overlays a map onto gps coordinate points using
 a map specification file and a file containing
 gps coordinate points. 
@@ -112,11 +139,6 @@ def overlay(overlay_specs_file, coordinate_file_name):
     #Determines coordinates of corner of map image. 
     map_img_name, BR, TL = read_in_overlay_specs(overlay_specs_file)
 
-    #Loads map image onto plot using corner coordinates. 
-    map_img_file = imread(map_img_name)
-
-    plt.imshow(map_img_file, zorder=0, extent=[TL[1], BR[1], BR[0], TL[0]])
-
     #Gets coordinate points from run.
     #Assumes that anything not ending in .csv is a label file. 
     if coordinate_file_name.endswith('.csv'):
@@ -124,8 +146,22 @@ def overlay(overlay_specs_file, coordinate_file_name):
     else: 
         lat_points, long_points = coordinates_from_label_file(coordinate_file_name)
 
+    #Ensures same number of latitude and longitude points were gathered. 
+    if not len(lat_points) == len(long_points):
+        print "latitude and longitude points disjoint in size!!!"
+
+        sys.exit()
+
+    #Translates them into coordinate system in meters. 
+    x_points, y_points, width, height = get_coordinates_in_meters(TL, BR, lat_points, long_points)
+
+    #Loads map image onto plot using corner coordinates. 
+    map_img_file = imread(map_img_name)
+
+    plt.imshow(map_img_file, zorder=0, extent=[0.0, width, 0.0, height])
+
     #Plots coordinate points and shows plot. 
-    plt.plot(long_points, lat_points, 'ro')
+    plt.plot(x_points, y_points, 'ro')
 
     plt.show()
 
@@ -134,17 +170,9 @@ if __name__ == "__main__":
 
 #TODO Extend code below when needed for gps to xy coordinate translation. 
 """    
-    x_points = []
-    y_points = []
+x_points = []
+y_points = []
 
 for i in range(len(lat_points)):
-    h = VincentyDistance((BL[0], BL[1]), (lat_points[i], long_points[i])).meters
-    e = VincentyDistance((BR[0], BR[1]), (lat_points[i], long_points[i])).meters
-    d = VincentyDistance((BL[0], BL[1]), (BR[0], BR[1])).meters
-
-    x = ((h ** 2) + (d ** 2) - (e ** 2)) / (2 * d)
-    y = (h ** 2) - (x ** 2)
-
-    x_points.append(x)
-    y_points.append(y)
+    
 """
