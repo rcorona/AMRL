@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rudy/Desktop/UMASS/CICS/rudy
+CMAKE_SOURCE_DIR = /home/rudy/Desktop/UMASS/CICS/data/undistort
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rudy/Desktop/UMASS/CICS/rudy
+CMAKE_BINARY_DIR = /home/rudy/Desktop/UMASS/CICS/data/undistort
 
 # Include any dependencies generated for this target.
 include CMakeFiles/undistort.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/undistort.dir/flags.make
 
 CMakeFiles/undistort.dir/undistort.cpp.o: CMakeFiles/undistort.dir/flags.make
 CMakeFiles/undistort.dir/undistort.cpp.o: undistort.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/rudy/Desktop/UMASS/CICS/rudy/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/rudy/Desktop/UMASS/CICS/data/undistort/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/undistort.dir/undistort.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/undistort.dir/undistort.cpp.o -c /home/rudy/Desktop/UMASS/CICS/rudy/undistort.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/undistort.dir/undistort.cpp.o -c /home/rudy/Desktop/UMASS/CICS/data/undistort/undistort.cpp
 
 CMakeFiles/undistort.dir/undistort.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/undistort.dir/undistort.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/rudy/Desktop/UMASS/CICS/rudy/undistort.cpp > CMakeFiles/undistort.dir/undistort.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/rudy/Desktop/UMASS/CICS/data/undistort/undistort.cpp > CMakeFiles/undistort.dir/undistort.cpp.i
 
 CMakeFiles/undistort.dir/undistort.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/undistort.dir/undistort.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/rudy/Desktop/UMASS/CICS/rudy/undistort.cpp -o CMakeFiles/undistort.dir/undistort.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/rudy/Desktop/UMASS/CICS/data/undistort/undistort.cpp -o CMakeFiles/undistort.dir/undistort.cpp.s
 
 CMakeFiles/undistort.dir/undistort.cpp.o.requires:
 .PHONY : CMakeFiles/undistort.dir/undistort.cpp.o.requires
@@ -126,6 +126,6 @@ CMakeFiles/undistort.dir/clean:
 .PHONY : CMakeFiles/undistort.dir/clean
 
 CMakeFiles/undistort.dir/depend:
-	cd /home/rudy/Desktop/UMASS/CICS/rudy && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/rudy/Desktop/UMASS/CICS/rudy /home/rudy/Desktop/UMASS/CICS/rudy /home/rudy/Desktop/UMASS/CICS/rudy /home/rudy/Desktop/UMASS/CICS/rudy /home/rudy/Desktop/UMASS/CICS/rudy/CMakeFiles/undistort.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/rudy/Desktop/UMASS/CICS/data/undistort && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/rudy/Desktop/UMASS/CICS/data/undistort /home/rudy/Desktop/UMASS/CICS/data/undistort /home/rudy/Desktop/UMASS/CICS/data/undistort /home/rudy/Desktop/UMASS/CICS/data/undistort /home/rudy/Desktop/UMASS/CICS/data/undistort/CMakeFiles/undistort.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/undistort.dir/depend
 

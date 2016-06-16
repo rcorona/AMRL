@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/rudy/Desktop/UMASS/CICS/rudy/undistort.cpp
+/home/rudy/Desktop/UMASS/CICS/data/undistort/undistort.cpp
 opencv2/core/core.hpp
 -
 opencv2/calib3d/calib3d.hpp

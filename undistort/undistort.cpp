@@ -29,6 +29,11 @@ int main(int argc, char const *argv[])
   cv::Mat img1 = imread(argv[1], CV_LOAD_IMAGE_COLOR);
   cv::Mat img2 = imread(argv[2], CV_LOAD_IMAGE_COLOR);
 
+  cv::Mat img1_resized, img2_resized; 
+
+  resize(img1, img1_resized, Size(960, 600));
+  resize(img2, img2_resized, Size(960, 600));
+
   //Camera matrices (i.e. .yaml files for left and right respectively)
   cv::FileStorage fs1(argv[3], cv::FileStorage::READ);
   cv::FileStorage fs2(argv[4], cv::FileStorage::READ);
@@ -44,13 +49,12 @@ int main(int argc, char const *argv[])
   Matx33d K2new = Matx33d(K2); 
   //K2new(0, 0) = 1; K2new(1, 1) = 1; K2new(2, 2) = 1;
 
-  cv::fisheye::undistortImage(img1, imgU1, Matx33d(K1), Mat(D1), K1new);
-  cv::fisheye::undistortImage(img2, imgU2, Matx33d(K2), Mat(D2), K2new);
-  int k = waitKey(0);
-  if (k > 0) {
-		cout << "writing to file..." << endl;
-    imwrite(argv[5], imgU1);
-    imwrite(argv[6], imgU2);
-  }
+  cv::fisheye::undistortImage(img1_resized, imgU1, Matx33d(K1), Mat(D1), K1new);
+  cv::fisheye::undistortImage(img2_resized, imgU2, Matx33d(K2), Mat(D2), K2new);
+
+  cout << "writing to file..." << endl;
+  imwrite(argv[5], imgU1);
+  imwrite(argv[6], imgU2);
+  
   return 0;
 }
