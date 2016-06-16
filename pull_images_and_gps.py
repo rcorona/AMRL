@@ -26,6 +26,7 @@ import rospy
 import rosbag
 import sys
 from math import sqrt
+import os
 
 """
 Prepares the data for the image using the latest values 
@@ -45,7 +46,25 @@ def write_data(camera_folder, data_file, latest_values, camera):
     data += str(latest_values['gps'].longitude) + ';'
     data += img_file_name + '\n'
 
-    data_file.write(label)
+    data_file.write(data)
+
+"""
+Creates the folder structure that will be used
+to keep track of the raw and pre-processed
+data for a run. 
+"""
+def create_folder_structure(top_level_folder_name):
+    #Creates top level if needed. 
+    if not os.path.isdir(top_level_folder_name):
+        os.mkdir(top_level_folder_name)
+
+    #Creates folder for raw data if needed. 
+    if not os.path.isdir(top_level_folder_name + 'raw_data'):
+        os.mkdir(top_level_folder_name + 'raw_data')
+
+    #Creates folder for pre-processed data if needed. 
+    if not os.path.isdir(top_level_folder_name + 'preprocessed_data'):
+        os.mkdir(top_level_folder_name + 'preprocessed_data')
 
 """
 The main method used to do the pulling. This is called from the main function,
@@ -57,9 +76,13 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
     #Opens bag file.
     bag_file = rosbag.Bag(file_name, 'r')
 
+    #Creates folder structure if it does not yet exist. 
+    create_folder_structure(left_camera_folder)
+    create_folder_structure(right_camera_folder)
+
     #Label files to build training set.
-    left_data = open(left_camera_folder + 'raw_data.txt', 'w')
-    right_data = open(right_camera_folder + 'raw_data.txt', 'w')
+    left_data = open(left_camera_folder + 'raw_data/raw_data.txt', 'w')
+    right_data = open(right_camera_folder + 'raw_data/raw_data.txt', 'w')
 
     #Topic names. 
     left_camera = '/camera_left/image_color/compressed'
@@ -109,10 +132,10 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
         
                 #Writes image label pairs for left and right cameras, updates their counters.  
                 if not latest_values['imgs']['left'] == None:
-                    write_data(left_camera_folder, left_data, latest_values, 'left')
+                    write_data(left_camera_folder + 'raw_data/', left_data, latest_values, 'left')
                     latest_values['img_counters']['left'] += 1
                 if not latest_values['imgs']['right'] == None:
-                    write_data(right_camera_folder, right_data, latest_values, 'right')
+                    write_data(right_camera_folder + 'raw_data/', right_data, latest_values, 'right')
                     latest_values['img_counters']['right'] += 1
                     
 

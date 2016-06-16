@@ -5,7 +5,7 @@ This script overlays the gps points held within raw data
 file (as prepared using pull_images_and_gps.py) or a csv file
 for a jackal run onto a google map.
 
-Usage: ./overlay_to_map.py [map_specs_file] [coordinate file] [bin size (m)]
+Usage: ./overlay_to_map.py [map_specs_file] [parent folder] [bin size (m)]
 
 Parameters: 
     map_specs_file - A text file containing the specifications
@@ -15,10 +15,9 @@ Parameters:
                      bottom_right_corner_latitude;bottom_right_corner_longitude
                      top_left_corner_latitude;top_left_corner_longitude
 
-    coordinate file - The file to read the coordinates from. This will most
-                      likely be the labels.txt file generated using
-                      pull_images_and_labels.py but may also be 
-                      a .csv file. 
+    parent folder - The path to the folder which contains the 'raw_data'
+                    and 'preprocessed_data' sub-folders. In other words, 
+                    the folder which contains the data to map and label. 
 
     bin size - The size of the bins to be used for labelling the images 
                to feed the NN for training. This should be specified in meters. 
@@ -45,46 +44,21 @@ pull_images_and_gps.py
 def coordinates_from_raw_data_file(label_file_name):    
     label_file = open(label_file_name, 'r')
     
-    #Reads in labels into lists. 
+    #Reads in data into lists. 
     lat_points = []
     long_points = []
+    img_files = []
 
     for line in label_file:
         values = line.split(';')
-        latitude = float(values[1])
-        longitude = float(values[0])
 
-        long_points.append(longitude)
-        lat_points.append(latitude)
-
+        lat_points.append(float(values[0]))
+        long_points.append(float(values[1]))
+        img_files.append(values[2].strip())
+        
     label_file.close()
 
-    return [lat_points, long_points]
-
-"""
-Reads and returns coordinate list from a .csv
-file. 
-"""
-def coordinates_from_csv_file(csv_file_name):
-    csv_file = open(csv_file_name, 'r')
-
-    #Reads values into lists. 
-    lat_points = []
-    long_points = []
-
-    for line in csv_file:
-        if not line.startswith('Date'):   
-            values = line.split(',')
-
-            latitude = float(values[3])
-            longitude = float(values[4])
-
-            long_points.append(longitude)
-            lat_points.append(latitude)
-
-    csv_file.close()
-
-    return [lat_points, long_points]
+    return [lat_points, long_points, img_files]
 
 """
 Reads in and returns map specifications
@@ -165,23 +139,59 @@ def grid_and_labels_from_bin_size(bin_length, figure, width, height, x_points, y
         label = (row * num_columns) + column
         labels.append(label)
 
-    return labels
+    #Prepares meta data for packaging with the labels. 
+    meta_data = [num_columns * num_rows]
+
+    return [meta_data, labels]
     
+"""
+Calls program to undistort all the images 
+listed in the input parameter. The undistorted
+images are put in an 'processed' folder
+in the same parent directory as that of the
+raw image folder. 
+"""
+def undistort_images(image_files):
+    #TODO Actually undistort images. 
+
+    return image_files
+
+"""
+This creates a text file containing the
+names of each (processed) image in a given
+list along with their labels. The resulting
+file may be used to construct the input
+to a NN. 
+"""
+def create_label_file(labels, img_files, parent_folder):
+    label_file = open(parent_folder + 'preprocessed_data/labels.txt', 'w')
+
+    #Prepares and writes meta data to file. 
+    meta_data = ';'.join([str(meta_value) for meta_value in labels[0]])
+    label_file.write('META_DATA:' + meta_data + '\n')
+
+    #Writes img/bin pairs to label file. 
+    for i in range(len(img_files)):
+        label_file.write(img_files[i] + ';' + str(labels[1][i]) + '\n')
+
+    label_file.close()
+
 """
 Overlays a map onto gps coordinate points using
 a map specification file and a file containing
-gps coordinate points. 
+gps coordinate points.
+
+Also uses the created grid to assign labels to each
+bin in the grid. All the points in the coordinate file
+are then translated to bins. This list of pre-processed,
+labelled data is returned. 
 """
-def overlay(overlay_specs_file, coordinate_file_name, bin_size):
+def overlay_and_label(overlay_specs_file, parent_folder, bin_size):
     #Determines coordinates of corner of map image. 
     map_img_name, BR, TL = read_in_overlay_specs(overlay_specs_file)
 
-    #Gets coordinate points from run.
-    #Assumes that anything not ending in .csv is a raw data file. 
-    if coordinate_file_name.endswith('.csv'):
-        lat_points, long_points = coordinates_from_csv_file(coordinate_file_name)
-    else: 
-        lat_points, long_points = coordinates_from_raw_data_file(coordinate_file_name)
+    #Gets coordinate points from run. 
+    lat_points, long_points, img_files = coordinates_from_raw_data_file(parent_folder + 'raw_data/raw_data.txt')
 
     #Ensures same number of latitude and longitude points were gathered. 
     if not len(lat_points) == len(long_points):
@@ -202,15 +212,25 @@ def overlay(overlay_specs_file, coordinate_file_name, bin_size):
 
     #Creates grid that will correspond to location bins to train NN.
     #Also generates labels associated with the bins. 
-    labels = grid_and_labels_from_bin_size(5, figure, width, height, x_points, y_points)
+    labels = grid_and_labels_from_bin_size(int(bin_size), figure, width, height, x_points, y_points)
 
-    #TODO write labels to file. 
+    #Pre-processes images (i.e. undistorts) and returns list of undestorted image names. 
+    img_files = undistort_images(img_files)
+
+    #Ensures dimmensions are still correct. 
+    if not len(img_files) == len(labels[1]):
+        print "# of imgs and # of labels does not match!"
+
+        sys.exit()
+
+    #Creates a label file for the data. 
+    create_label_file(labels, img_files, parent_folder)
 
     #Presents the plot. 
     plt.show()
 
 if __name__ == "__main__":
     if not len(sys.argv) == 4:
-        print 'Usage: ./overlay_to_map.py [map_specs_file] [coordinate file] [bin size (m)]' 
+        print 'Usage: ./overlay_to_map.py [map_specs_file] [parent folder] [bin size (m)]' 
     else: 
-        overlay(sys.argv[1], sys.argv[2], sys.argv[3])
+        overlay_and_label(sys.argv[1], sys.argv[2], sys.argv[3])
