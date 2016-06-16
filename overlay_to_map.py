@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 """
-This script overlays the gps points held within a label
-file (as prepared using pull_images_and_labels.py) or a csv file
+This script overlays the gps points held within raw data
+file (as prepared using pull_images_and_gps.py) or a csv file
 for a jackal run onto a google map.
 
-Usage: ./overlay_to_map.py [map_specs_file] [coordinate file]
+Usage: ./overlay_to_map.py [map_specs_file] [coordinate file] [bin size (m)]
 
 Parameters: 
     map_specs_file - A text file containing the specifications
@@ -20,6 +20,8 @@ Parameters:
                       pull_images_and_labels.py but may also be 
                       a .csv file. 
 
+    bin size - The size of the bins to be used for labelling the images 
+               to feed the NN for training. This should be specified in meters. 
 
 Author: Rodolfo Corona, rcorona@utexas.edu
 """
@@ -36,11 +38,11 @@ import math
 import numpy as np
 
 """
-Reads and returns coordinate lists from a label
-file that was generated using 
-pull_images_and_labels.py
+Reads and returns coordinate lists from a raw
+data file that was generated using 
+pull_images_and_gps.py
 """
-def coordinates_from_label_file(label_file_name):    
+def coordinates_from_raw_data_file(label_file_name):    
     label_file = open(label_file_name, 'r')
     
     #Reads in labels into lists. 
@@ -170,16 +172,16 @@ Overlays a map onto gps coordinate points using
 a map specification file and a file containing
 gps coordinate points. 
 """
-def overlay(overlay_specs_file, coordinate_file_name):
+def overlay(overlay_specs_file, coordinate_file_name, bin_size):
     #Determines coordinates of corner of map image. 
     map_img_name, BR, TL = read_in_overlay_specs(overlay_specs_file)
 
     #Gets coordinate points from run.
-    #Assumes that anything not ending in .csv is a label file. 
+    #Assumes that anything not ending in .csv is a raw data file. 
     if coordinate_file_name.endswith('.csv'):
         lat_points, long_points = coordinates_from_csv_file(coordinate_file_name)
     else: 
-        lat_points, long_points = coordinates_from_label_file(coordinate_file_name)
+        lat_points, long_points = coordinates_from_raw_data_file(coordinate_file_name)
 
     #Ensures same number of latitude and longitude points were gathered. 
     if not len(lat_points) == len(long_points):
@@ -208,13 +210,7 @@ def overlay(overlay_specs_file, coordinate_file_name):
     plt.show()
 
 if __name__ == "__main__":
-    overlay(sys.argv[1], sys.argv[2])
-
-#TODO Extend code below when needed for gps to xy coordinate translation. 
-"""    
-x_points = []
-y_points = []
-
-for i in range(len(lat_points)):
-    
-"""
+    if not len(sys.argv) == 4:
+        print 'Usage: ./overlay_to_map.py [map_specs_file] [coordinate file] [bin size (m)]' 
+    else: 
+        overlay(sys.argv[1], sys.argv[2], sys.argv[3])

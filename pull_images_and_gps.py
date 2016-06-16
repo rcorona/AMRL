@@ -3,10 +3,14 @@
 """
 This script takes a bag file and creates sets of images
 labeled with their corresponding gps coordinates. 
+The resulting file MUST still be pre-processed
+in order to get class labels. The images must also 
+be preprocessed to remove distortions and get them
+to fit the required dimmensions. 
 The images are pulled from the bag file every 'rate'
 meters of movement. 
 
-Usage: ./pull_images_and_labels.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]
+Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]
 
 Parameters: 
     bag_file_name: The name of the bag file to pull from. 
@@ -24,10 +28,10 @@ import sys
 from math import sqrt
 
 """
-Prepares the label for the image using the latest values 
+Prepares the data for the image using the latest values 
 in the bag file. 
 """
-def write_label(camera_folder, label_file, latest_values, camera):
+def write_data(camera_folder, data_file, latest_values, camera):
     #Writes image to jpg file in pertaining camera's folder. 
     img_file_name = camera_folder + str(latest_values['img_counters'][camera]) + '.jpg'
     img_file = open(img_file_name, 'w')
@@ -37,11 +41,11 @@ def write_label(camera_folder, label_file, latest_values, camera):
     img_file.close()
 
     #Writes images label to the label file.
-    label = str(latest_values['gps'].latitude) + ';'
-    label += str(latest_values['gps'].longitude) + ';'
-    label += img_file_name + '\n'
+    data = str(latest_values['gps'].latitude) + ';'
+    data += str(latest_values['gps'].longitude) + ';'
+    data += img_file_name + '\n'
 
-    label_file.write(label)
+    data_file.write(label)
 
 """
 The main method used to do the pulling. This is called from the main function,
@@ -54,8 +58,8 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
     bag_file = rosbag.Bag(file_name, 'r')
 
     #Label files to build training set.
-    left_labels = open(left_camera_folder + 'labels.txt', 'w')
-    right_labels = open(right_camera_folder + 'labels.txt', 'w')
+    left_data = open(left_camera_folder + 'raw_data.txt', 'w')
+    right_data = open(right_camera_folder + 'raw_data.txt', 'w')
 
     #Topic names. 
     left_camera = '/camera_left/image_color/compressed'
@@ -105,16 +109,16 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
         
                 #Writes image label pairs for left and right cameras, updates their counters.  
                 if not latest_values['imgs']['left'] == None:
-                    write_label(left_camera_folder, left_labels, latest_values, 'left')
+                    write_data(left_camera_folder, left_data, latest_values, 'left')
                     latest_values['img_counters']['left'] += 1
                 if not latest_values['imgs']['right'] == None:
-                    write_label(right_camera_folder, right_labels, latest_values, 'right')
+                    write_data(right_camera_folder, right_data, latest_values, 'right')
                     latest_values['img_counters']['right'] += 1
                     
 
     #Closes files. 
-    left_labels.close()
-    right_labels.close()
+    left_data.close()
+    right_data.close()
     bag_file.close()
 
 """
@@ -123,6 +127,6 @@ procedure.
 """
 if __name__ == "__main__":
     if not len(sys.argv) == 5:
-        print 'Usage: ./pull_images_and_labels.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]'
+        print 'Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]'
     else:
         pull_every_n_meters(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
