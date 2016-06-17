@@ -10,14 +10,13 @@ to fit the required dimmensions.
 The images are pulled from the bag file every 'rate'
 meters of movement. 
 
-Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]
+Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [camera_folder] [camera (left/right)]
 
 Parameters: 
     bag_file_name: The name of the bag file to pull from. 
     rate: The rate in meters to pull (i.e. sample) images in. 
-    left_camera_folder: The folder where the label file and corresponding jpg images will be kept
-                        for the left camera. 
-    right_camera_folder: Same as above, but for the right camera. 
+    camera_folder: The folder where the label file and corresponding jpg images will be kept.
+    camera: Specifies whether to use the left or right camera topic. May be 'left' or 'right'.  
 
 Author: Rodolfo Corona, rcorona@utexas.edu
 """
@@ -32,12 +31,12 @@ import os
 Prepares the data for the image using the latest values 
 in the bag file. 
 """
-def write_data(camera_folder, data_file, latest_values, camera):
+def write_data(camera_folder, data_file, latest_values):
     #Writes image to jpg file in pertaining camera's folder. 
-    img_file_name = camera_folder + str(latest_values['img_counters'][camera]) + '.jpg'
+    img_file_name = camera_folder + str(latest_values['img_counter']) + '.jpg'
     img_file = open(img_file_name, 'w')
 
-    img_file.write(latest_values['imgs'][camera].data)
+    img_file.write(latest_values['img'].data)
 
     img_file.close()
 
@@ -72,21 +71,21 @@ but may be called seperately if being used in another script.
 
 The parameters correspond exactly to the ones specified at the top of this file (under Usage). 
 """
-def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder):
+def pull_every_n_meters(file_name, rate, camera_folder, camera):
     #Opens bag file.
     bag_file = rosbag.Bag(file_name, 'r')
 
     #Creates folder structure if it does not yet exist. 
-    create_folder_structure(left_camera_folder)
-    create_folder_structure(right_camera_folder)
+    create_folder_structure(camera_folder)
 
     #Label files to build training set.
-    left_data = open(left_camera_folder + 'raw_data/raw_data.txt', 'w')
-    right_data = open(right_camera_folder + 'raw_data/raw_data.txt', 'w')
+    data_file = open(camera_folder + 'raw_data/raw_data.txt', 'w')
 
     #Topic names. 
     left_camera = '/camera_left/image_color/compressed'
     right_camera = '/camera_right/image_color/compressed'
+    camera_topic = left_camera if camera == 'left' else right_camera
+    
     odom = '/jackal_velocity_controller/odom'
     gps = '/navsat/fix'
 
@@ -96,18 +95,16 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
     #Keeps track of pertinent data. 
     odom_values = {'prev_x': 0.0, 'prev_y': 0.0, 'diff': 0.0}
     latest_values = {
-                     'imgs': {'left': None, 'right': None}, 
+                     'img': None, 
                      'gps': None,
-                     'img_counters': {'left': 0, 'right': 0}
+                     'img_counter': 0
                     }
 
     #Reads bag file to pull images. 
     for topic, msg, t in bag_file.read_messages():
         #First three topics merely update their respective reading. 
-        if topic == left_camera:
-            latest_values['imgs']['left'] = msg
-        elif topic == right_camera:
-            latest_values['imgs']['right'] = msg
+        if topic == camera_topic:
+            latest_values['img'] = msg
         elif topic == gps:
             latest_values['gps'] = msg
         #If odometry, then check if movement rate has been met.
@@ -131,17 +128,12 @@ def pull_every_n_meters(file_name, rate, left_camera_folder, right_camera_folder
                 odom_values['diff'] = 0.0
         
                 #Writes image label pairs for left and right cameras, updates their counters.  
-                if not latest_values['imgs']['left'] == None:
-                    write_data(left_camera_folder + 'raw_data/', left_data, latest_values, 'left')
-                    latest_values['img_counters']['left'] += 1
-                if not latest_values['imgs']['right'] == None:
-                    write_data(right_camera_folder + 'raw_data/', right_data, latest_values, 'right')
-                    latest_values['img_counters']['right'] += 1
-                    
+                if not latest_values['img'] == None:
+                    write_data(camera_folder + 'raw_data/', data_file, latest_values)
+                    latest_values['img_counter'] += 1
 
     #Closes files. 
-    left_data.close()
-    right_data.close()
+    data_file.close()
     bag_file.close()
 
 """
@@ -150,6 +142,6 @@ procedure.
 """
 if __name__ == "__main__":
     if not len(sys.argv) == 5:
-        print 'Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [left_camera_folder] [right_camera_folder]'
+        print 'Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [camera_folder] [camera (left/right)]'
     else:
         pull_every_n_meters(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

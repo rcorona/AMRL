@@ -35,6 +35,8 @@ import matplotlib.cbook as cbook
 from math import sqrt
 import math
 import numpy as np
+import subprocess
+import os
 
 """
 Reads and returns coordinate lists from a raw
@@ -136,25 +138,49 @@ def grid_and_labels_from_bin_size(bin_length, figure, width, height, x_points, y
         column = int(x_points[i]) / bin_length
         row = int(y_points[i]) / bin_length
 
-        label = (row * num_columns) + column
-        labels.append(label)
+        """
+        CHANGE THIS PART IF DIFFERENT LABELS ARE NEEDED. 
 
-    #Prepares meta data for packaging with the labels. 
-    meta_data = [num_columns * num_rows]
+        Currently labels are real values in the following format:
+        img;x;y
+        """
+        labels.append([x_points[i], y_points[i]])
 
-    return [meta_data, labels]
+    return labels
     
 """
 Calls program to undistort all the images 
 listed in the input parameter. The undistorted
 images are put in an 'processed' folder
 in the same parent directory as that of the
-raw image folder. 
-"""
-def undistort_images(image_files):
-    #TODO Actually undistort images. 
+raw image folder, particularly in the
+'preprocessed_data' folder.
 
-    return image_files
+The images will also be resized to 
+360 x 224 in order to be valid
+for NN training. 
+"""
+def preprocess_images(image_files, parent_folder):
+    preprocessed_imgs = []
+
+    #Preprocess each image. 
+    for image in image_files:
+        #Prepares preprocessed image's name. 
+        preprocessed_img = parent_folder + 'preprocessed_data/' + os.path.basename(image)    
+
+        #Arguments for undistort binary. 
+        args = ('undistort/undistort', image, preprocessed_img) 
+
+        #Runs undistort program on image. 
+        popen = subprocess.Popen(args, stdout=subprocess.PIPE)
+        popen.wait()
+
+        #Adds preprocessed image to list. 
+        preprocessed_imgs.append(preprocessed_img)
+
+        print 'Preprocessed image ' + preprocessed_img
+
+    return preprocessed_imgs
 
 """
 This creates a text file containing the
@@ -166,13 +192,9 @@ to a NN.
 def create_label_file(labels, img_files, parent_folder):
     label_file = open(parent_folder + 'preprocessed_data/labels.txt', 'w')
 
-    #Prepares and writes meta data to file. 
-    meta_data = ';'.join([str(meta_value) for meta_value in labels[0]])
-    label_file.write('META_DATA:' + meta_data + '\n')
-
     #Writes img/bin pairs to label file. 
     for i in range(len(img_files)):
-        label_file.write(img_files[i] + ';' + str(labels[1][i]) + '\n')
+        label_file.write(img_files[i] + ';' + str(labels[i][0]) + ';' + str(labels[i][1]) + '\n')
 
     label_file.close()
 
@@ -215,10 +237,10 @@ def overlay_and_label(overlay_specs_file, parent_folder, bin_size):
     labels = grid_and_labels_from_bin_size(int(bin_size), figure, width, height, x_points, y_points)
 
     #Pre-processes images (i.e. undistorts) and returns list of undestorted image names. 
-    img_files = undistort_images(img_files)
+    img_files = preprocess_images(img_files, parent_folder)
 
     #Ensures dimmensions are still correct. 
-    if not len(img_files) == len(labels[1]):
+    if not len(img_files) == len(labels):
         print "# of imgs and # of labels does not match!"
 
         sys.exit()
