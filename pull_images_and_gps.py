@@ -10,13 +10,17 @@ to fit the required dimmensions.
 The images are pulled from the bag file every 'rate'
 meters of movement. 
 
-Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [camera_folder] [camera (left/right)]
+Usage for single file: ./pull_images_and_gps.py single [bag_file_name.bag] [rate]
+    Parameters: 
+        bag_file_name: The name of the bag file to pull from. 
+        rate: The rate in meters to pull (i.e. sample) images in. 
 
-Parameters: 
-    bag_file_name: The name of the bag file to pull from. 
-    rate: The rate in meters to pull (i.e. sample) images in. 
-    camera_folder: The folder where the label file and corresponding jpg images will be kept.
-    camera: Specifies whether to use the left or right camera topic. May be 'left' or 'right'.  
+Usage for multiple files: ./pull_images_and_gps.py multiple [folder] [rate]
+    Parameters:
+        folder: The folder which contains the bag files to be processed. 
+        rate: The rate in meters to pull (i.e. sample) images in. 
+            
+
 
 Author: Rodolfo Corona, rcorona@utexas.edu
 """
@@ -58,11 +62,11 @@ def create_folder_structure(top_level_folder_name):
         os.mkdir(top_level_folder_name)
 
     #Creates folder for raw data if needed. 
-    if not os.path.isdir(top_level_folder_name + 'raw_data'):
-        os.mkdir(top_level_folder_name + 'raw_data')
+    if not os.path.isdir(top_level_folder_name + '/raw_data'):
+        os.mkdir(top_level_folder_name + '/raw_data')
 
     #Creates folder for pre-processed data if needed. 
-    if not os.path.isdir(top_level_folder_name + 'preprocessed_data'):
+    if not os.path.isdir(top_level_folder_name + '/preprocessed_data'):
         os.mkdir(top_level_folder_name + 'preprocessed_data')
 
 """
@@ -71,7 +75,10 @@ but may be called seperately if being used in another script.
 
 The parameters correspond exactly to the ones specified at the top of this file (under Usage). 
 """
-def pull_every_n_meters(file_name, rate, camera_folder, camera):
+def pull_every_n_meters(file_name, rate, camera):
+    #Creates a folder name for the processing of the file. 
+    camera_folder = file_name.split('.')[0] + '/' 
+
     #Opens bag file.
     bag_file = rosbag.Bag(file_name, 'r')
 
@@ -128,7 +135,7 @@ def pull_every_n_meters(file_name, rate, camera_folder, camera):
                 odom_values['diff'] = 0.0
         
                 #Writes image label pairs for left and right cameras, updates their counters.  
-                if not latest_values['img'] == None:
+                if not (latest_values['img'] == None or latest_values['gps'] == None):
                     write_data(camera_folder + 'raw_data/', data_file, latest_values)
                     latest_values['img_counter'] += 1
 
@@ -137,11 +144,29 @@ def pull_every_n_meters(file_name, rate, camera_folder, camera):
     bag_file.close()
 
 """
+This function processes an entire folder of bag files
+using the desired pulling specifications. 
+"""
+def process_folder(folder, rate, camera):
+    for entry in os.listdir(folder):
+        #If bag file, then process. 
+        if entry.endswith('.clipped') or entry.endswith('.bag'):
+            print 'Pulling from ' + folder + '/' + entry + '...'
+            pull_every_n_meters(folder + '/' + entry, rate, camera)
+
+"""
 If summoned from the command line, then just go through pulling
 procedure. 
 """
 if __name__ == "__main__":
-    if not len(sys.argv) == 5:
-        print 'Usage: ./pull_images_and_gps.py [bag_file_name.bag] [rate] [camera_folder] [camera (left/right)]'
+    if not len(sys.argv) == 4:
+        print 'Usage for single file: ./pull_images_and_gps.py single [bag_file_name.bag] [rate]'
+        print 'Usage for multiple files: ./pull_images_and_gps.py multiple [folder] [rate]'
+    elif sys.argv[1] == 'single':
+        #For now only pulls from the left camera. 
+        pull_every_n_meters(sys.argv[2], sys.argv[3], 'left')
+    elif sys.argv[1] == 'multiple':
+        process_folder(sys.argv[2], sys.argv[3], 'left')
     else:
-        pull_every_n_meters(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        print 'Usage for single file: ./pull_images_and_gps.py single [bag_file_name.bag] [rate]'
+        print 'Usage for multiple files: ./pull_images_and_gps.py multiple [folder] [rate]'

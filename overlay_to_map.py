@@ -3,24 +3,36 @@
 """
 This script overlays the gps points held within raw data
 file (as prepared using pull_images_and_gps.py) or a csv file
-for a jackal run onto a google map.
+for a jackal run onto a google map. It also generates
+label files for the run(s) given. 
 
-Usage: ./overlay_to_map.py [map_specs_file] [parent folder] [bin size (m)]
+Usage for single file: ./overlay_to_map.py single [map_specs_file] [run folder] [bin size (m)]
+    Parameters: 
+        map_specs_file - A text file containing the specifications
+                         for the map overlay in the following format:
 
-Parameters: 
-    map_specs_file - A text file containing the specifications
-                     for the map overlay in the following format:
+                         map_img_name
+                         bottom_right_corner_latitude;bottom_right_corner_longitude
+                         top_left_corner_latitude;top_left_corner_longitude
 
-                     map_img_name
-                     bottom_right_corner_latitude;bottom_right_corner_longitude
-                     top_left_corner_latitude;top_left_corner_longitude
+        run folder - The path to the folder which contains the 'raw_data'
+                        and 'preprocessed_data' sub-folders for a run. 
+                        In other words, the folder which contains the data to 
+                        map and label. 
 
-    parent folder - The path to the folder which contains the 'raw_data'
-                    and 'preprocessed_data' sub-folders. In other words, 
-                    the folder which contains the data to map and label. 
+        bin size - The size of the bins to be used for labelling the images 
+                   to feed the NN for training. This should be specified in meters. 
 
-    bin size - The size of the bins to be used for labelling the images 
-               to feed the NN for training. This should be specified in meters. 
+Usage for multiple files: ./overlay_to_map.py multiple [map_specs_file] [parent_folder] [bin size(m)]
+    Parameters:
+        map_specs_file - Same as for single files. 
+        
+        parent_folder - The folder whose sub-folders are particular runs to overlay onto
+                        the map. In other words, this is the parent_folder which contains
+                        all of the run folders to process. 
+
+        bin size - Same as for single files. 
+
 
 Author: Rodolfo Corona, rcorona@utexas.edu
 """
@@ -163,10 +175,13 @@ for NN training.
 def preprocess_images(image_files, parent_folder):
     preprocessed_imgs = []
 
+    #For keeping track of progress. 
+    count = 1
+
     #Preprocess each image. 
     for image in image_files:
         #Prepares preprocessed image's name. 
-        preprocessed_img = parent_folder + 'preprocessed_data/' + os.path.basename(image)    
+        preprocessed_img = parent_folder + '/preprocessed_data/' + os.path.basename(image)    
 
         #Arguments for undistort binary. 
         args = ('undistort/undistort', image, preprocessed_img) 
@@ -178,7 +193,14 @@ def preprocess_images(image_files, parent_folder):
         #Adds preprocessed image to list. 
         preprocessed_imgs.append(preprocessed_img)
 
-        print 'Preprocessed image ' + preprocessed_img
+        #Updates progress. 
+        sys.stdout.write('\rProcessed image ' + str(count) + ' of ' + str(len(image_files)))
+        sys.stdout.flush()
+        count += 1
+
+    #Clears progress tracking. 
+    sys.stdout.write('\r')
+    sys.stdout.flush()
 
     return preprocessed_imgs
 
@@ -190,7 +212,7 @@ file may be used to construct the input
 to a NN. 
 """
 def create_label_file(labels, img_files, parent_folder):
-    label_file = open(parent_folder + 'preprocessed_data/labels.txt', 'w')
+    label_file = open(parent_folder + '/preprocessed_data/labels.txt', 'w')
 
     #Writes img/bin pairs to label file. 
     for i in range(len(img_files)):
@@ -213,7 +235,7 @@ def overlay_and_label(overlay_specs_file, parent_folder, bin_size):
     map_img_name, BR, TL = read_in_overlay_specs(overlay_specs_file)
 
     #Gets coordinate points from run. 
-    lat_points, long_points, img_files = coordinates_from_raw_data_file(parent_folder + 'raw_data/raw_data.txt')
+    lat_points, long_points, img_files = coordinates_from_raw_data_file(parent_folder + '/raw_data/raw_data.txt')
 
     #Ensures same number of latitude and longitude points were gathered. 
     if not len(lat_points) == len(long_points):
@@ -251,8 +273,33 @@ def overlay_and_label(overlay_specs_file, parent_folder, bin_size):
     #Presents the plot. 
     plt.show()
 
+"""
+Runs overlay_and_label over an entire folder. 
+In other words, processes all the runs held
+within a folder.
+
+NOTE: This function assumes that every directory
+within the specified parent_folder pertains to 
+a run. Errors WILL occur if parent_folder contains
+directories which do not pertain to a run and have
+not been processed by pull_images_and_gps.py. 
+"""
+def overlay_and_label_folder(map_specs_file, parent_folder, bin_size):
+    for entry in os.listdir(parent_folder):
+        #If directory, then run overlaying procedure on it. 
+        if os.path.isdir(parent_folder + '/' + entry):
+            print 'Overlaying and labelling ' + parent_folder + '/' + entry + '...'
+            overlay_and_label(map_specs_file, parent_folder + '/' + entry, bin_size)
+
 if __name__ == "__main__":
-    if not len(sys.argv) == 4:
-        print 'Usage: ./overlay_to_map.py [map_specs_file] [parent folder] [bin size (m)]' 
-    else: 
-        overlay_and_label(sys.argv[1], sys.argv[2], sys.argv[3])
+    if not len(sys.argv) == 5:
+        print 'Usage for single file: ./overlay_to_map.py single [map_specs_file] [run folder] [bin size (m)]' 
+        print 'Usage for multiple files: ./overlay_to_map.py multiple [map_specs_file] [parent folder] [bin size(m)]'
+    elif sys.argv[1] == 'single':
+        overlay_and_label(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif sys.argv[1] == 'multiple':
+        overlay_and_label_folder(sys.argv[2], sys.argv[3], sys.argv[4])
+    else:
+        print 'Usage for single file: ./overlay_to_map.py single [map_specs_file] [run folder] [bin size (m)]' 
+        print 'Usage for multiple files: ./overlay_to_map.py multiple [map_specs_file] [parent folder] [bin size(m)]'
+
