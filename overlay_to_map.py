@@ -64,11 +64,18 @@ def coordinates_from_raw_data_file(label_file_name):
     img_files = []
 
     for line in label_file:
+        #Parses line for values. 
         values = line.split(';')
 
-        lat_points.append(float(values[0]))
-        long_points.append(float(values[1]))
-        img_files.append(values[2].strip())
+        latitude = float(values[0])
+        longitude = float(values[1])
+        img_file = values[2].strip()
+
+        #If invalid gps data, then don't include data point.     
+        if not (math.isnan(latitude) or math.isnan(longitude)):
+            lat_points.append(latitude)
+            long_points.append(longitude)
+            img_files.append(img_file)
         
     label_file.close()
 
@@ -271,7 +278,7 @@ def overlay_and_label(overlay_specs_file, parent_folder, bin_size):
     create_label_file(labels, img_files, parent_folder)
 
     #Presents the plot. 
-    plt.show()
+#plt.show()
 
 """
 Runs overlay_and_label over an entire folder. 
