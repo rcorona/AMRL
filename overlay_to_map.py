@@ -191,7 +191,7 @@ def preprocess_images(image_files, parent_folder):
         preprocessed_img = parent_folder + '/preprocessed_data/' + os.path.basename(image)    
 
         #Arguments for undistort binary. 
-        args = ('undistort/undistort', image, preprocessed_img) 
+        args = ('undistort/undistort', 'undistort/cam_left.yml', image, preprocessed_img) 
 
         #Runs undistort program on image. 
         popen = subprocess.Popen(args, stdout=subprocess.PIPE)
