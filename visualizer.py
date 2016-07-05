@@ -24,14 +24,17 @@ class Visualizer:
         print 'Opening bag file...'
         self.bag_file = rosbag.Bag(bag_file, 'r')
 
-        #Determines coordinates of corner of map image. 
-        map_img_name, self.BR, self.TL = read_in_overlay_specs(map_specs)
-        self.width = float(VincentyDistance((self.BR[0], self.TL[1]), (self.BR[0], self.BR[1])).meters)
-        self.height = float(VincentyDistance((self.BR[0], self.TL[1]), (self.TL[0], self.TL[1])).meters)
+        #Determines coordinates of corner of map image if overlay given.
+        if map_specs == 'None':
+            self.map_img_file = None
+        else:
+            map_img_name, self.BR, self.TL = read_in_overlay_specs(map_specs)
+            self.width = float(VincentyDistance((self.BR[0], self.TL[1]), (self.BR[0], self.BR[1])).meters)
+            self.height = float(VincentyDistance((self.BR[0], self.TL[1]), (self.TL[0], self.TL[1])).meters)
 
-        #Loads map image onto plot using corner coordinates. 
-        self.figure = plt.figure()
-        self.map_img_file = imread(map_img_name)
+            #Loads map image onto plot using corner coordinates. 
+            self.figure = plt.figure()
+            self.map_img_file = imread(map_img_name)
 
     def gps_to_meters(self, latitude, longitude):
         #Translates coordinate point based on formula below. 
@@ -131,10 +134,10 @@ class Visualizer:
         #Plots heading. 
         plt.plot(range(len(theta_points)), theta_points)
         plt.show()
-        
 
-        #Sets up map image. 
-        plt.imshow(self.map_img_file, zorder=0, extent=[0.0, self.width, 0.0, self.height])
+        #Places map overlay on graph if needed. 
+        if not self.map_img_file == None:
+            plt.imshow(self.map_img_file, zorder=0, extent=[0.0, self.width, 0.0, self.height])
 
         #Plots arrows. 
         for i in range(len(x_points)): 
@@ -183,14 +186,26 @@ class Visualizer:
             #Includes time stamp for use in plotting. 
             time_points.append(time)
 
-        print theta_points
-        print time_points
-
         #Plots points. 
         plt.plot(time_points, theta_points, 'ro')
         plt.show()       
 
     def plot_odom(self, topic_data):
+        x_points = []
+        y_points = []
+
+        #Processes each message. 
+        for msg_time in topic_data['/odometry/filtered']:
+            msg = msg_time[0]    
+
+            x_points.append(msg.pose.pose.position.x)
+            y_points.append(msg.pose.pose.position.y)
+        
+        #Plots points. 
+        plt.plot(x_points, y_points, 'ro')
+        plt.show()
+
+    def plot_odom_overlay(self, topic_data):
         x_points = []
         y_points = []
 
@@ -211,9 +226,6 @@ class Visualizer:
 
             x_points.append(x)
             y_points.append(y)
-
-        #Sets up map image. 
-        plt.imshow(self.map_img_file, zorder=0, extent=[0.0, self.width, 0.0, self.height])
 
         #Plots points. 
         plt.plot(x_points, y_points, 'ro')
@@ -248,9 +260,6 @@ class Visualizer:
             #Includes time stamp for use in plotting. 
             time_points.append(time)
 
-        print theta_points
-        print time_points
-
         #Plots points. 
         plt.plot(time_points, theta_points, 'ro')
         plt.show()       
@@ -262,6 +271,8 @@ class Visualizer:
             self.plot_odom(topic_data)
         elif topic == '/imu/data':
             self.plot_imu(topic_data)
+        elif topic == '/odometry/filtered_overlay':
+            self.plot_odom_overlay(topic_data)
         elif topic == '/odometry/filtered_pos':
             self.plot_odom_orientation(topic_data)
 
