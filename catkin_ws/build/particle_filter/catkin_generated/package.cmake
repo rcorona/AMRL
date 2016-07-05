@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "particle_filter")
+set(particle_filter_MAINTAINER "Rodolfo Corona <rcorona@utexas.edu>")
+set(particle_filter_DEPRECATED "")
+set(particle_filter_VERSION "0.0.0")
+set(particle_filter_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "message_generation")
+set(particle_filter_RUN_DEPENDS "message_runtime" "roscpp" "rospy" "std_msgs")
+set(particle_filter_BUILDTOOL_DEPENDS "catkin")

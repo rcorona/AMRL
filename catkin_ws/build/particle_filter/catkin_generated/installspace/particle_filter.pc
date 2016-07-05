@@ -1,0 +1,8 @@
+prefix=/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/install
+
+Name: particle_filter
+Description: Description of particle_filter
+Version: 0.0.0
+Cflags: -I/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/install/include
+Libs: -L/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/install/lib -lparticle_filter
+Requires: roscpp rospy std_msgs message_runtime
