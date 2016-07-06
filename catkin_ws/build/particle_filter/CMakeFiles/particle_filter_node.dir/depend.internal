@@ -64,6 +64,9 @@ particle_filter/CMakeFiles/particle_filter_node.dir/src/particle_filter/particle
  /opt/ros/indigo/include/ros/wall_timer_options.h
  /opt/ros/indigo/include/rosconsole/macros_generated.h
 particle_filter/CMakeFiles/particle_filter_node.dir/src/particle_filter_node.cpp.o
+ /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/devel/include/particle_filter/Particle.h
+ /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/devel/include/particle_filter/Particle_vector.h
+ /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/devel/include/particle_filter/Pose.h
  /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/src/particle_filter/include/particle_filter/particle_filter.h
  /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/src/particle_filter/src/particle_filter_node.cpp
  /opt/ros/indigo/include/XmlRpcDecl.h
@@ -86,6 +89,7 @@ particle_filter/CMakeFiles/particle_filter_node.dir/src/particle_filter_node.cpp
  /opt/ros/indigo/include/ros/message.h
  /opt/ros/indigo/include/ros/message_event.h
  /opt/ros/indigo/include/ros/message_forward.h
+ /opt/ros/indigo/include/ros/message_operations.h
  /opt/ros/indigo/include/ros/message_traits.h
  /opt/ros/indigo/include/ros/names.h
  /opt/ros/indigo/include/ros/node_handle.h

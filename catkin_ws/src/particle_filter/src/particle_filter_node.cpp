@@ -8,12 +8,12 @@ int main(int argc, char **argv) {
 	ros::NodeHandle node; 
 
 	//Initialize publisher and rate. 
-	ros::Publisher pub = node.advertise<particle_filter::Particle_vector>("particles", 1000); 
+	ros::Publisher pub = node.advertise<particle_filter::Particle_vector>("particle_filter", 1000); 
 	ros::Rate loop_rate(10); 
 
 	//Initialises the particle filter. 
 	ParticleFilter pf; 
-	pf.init(5000);
+	pf.init(50);
 	
 	int count = 0;
 

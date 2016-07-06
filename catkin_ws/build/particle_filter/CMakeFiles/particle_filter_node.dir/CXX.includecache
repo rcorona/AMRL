@@ -82,6 +82,14 @@ iostream
 random
 -
 
+/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/src/particle_filter/src/particle_filter_node.cpp
+particle_filter/particle_filter.h
+-
+particle_filter/Particle_vector.h
+-
+ros/ros.h
+-
+
 /opt/ros/indigo/include/XmlRpcDecl.h
 ros/macros.h
 -
