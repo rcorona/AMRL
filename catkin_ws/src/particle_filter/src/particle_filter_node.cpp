@@ -37,7 +37,10 @@ int main(int argc, char **argv) {
 		pf.elapse_time(&odom);
 
 		//Weighs particles based on sensor readings. //TODO add sensor readings. 
-		pf.weigh_particles(); 
+		pf.weigh_particles();
+
+		//Now resamples them. 
+		pf.resample_particles(); 
 	}
 
 	return 0; 

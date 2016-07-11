@@ -73,6 +73,8 @@ iostream
 -
 math.h
 -
+algorithm
+-
 
 /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/src/particle_filter/src/particle_filter/particle_filter.cpp
 ros/ros.h
@@ -88,6 +90,8 @@ iostream
 random
 -
 math.h
+-
+algorithm
 -
 
 /opt/ros/indigo/include/XmlRpcDecl.h

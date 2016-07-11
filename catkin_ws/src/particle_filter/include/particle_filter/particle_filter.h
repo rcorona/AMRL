@@ -8,6 +8,7 @@
 #include <vector> 
 #include <iostream>
 #include <math.h>
+#include <algorithm>
 
 struct Error {
 	double variance_proportion; 
@@ -37,8 +38,8 @@ public:
 	void resample_particles(); 
 
 private:
-	std::default_random_engine engine; 
-
+	std::default_random_engine generator; 
+	
 	//Error models. 
 	ErrorModel forward_error;
 
@@ -58,12 +59,9 @@ private:
 	//Weights particles based on sensor readings. 
 	void weigh_particle(particle_filter::Particle *particle); // TODO add sensor reading.  
 
-	//Resamples particle based on the weighted particle distribution. 
-	void resample_particle(particle_filter::Particle *particle); 
-
 	//Methods for computing error gaussians. 
 	std::normal_distribution<double> compute_x_gauss(nav_msgs::Odometry *reading);
-	std::normal_distribution<double> compute_y_gauss(nav_msgs::Odometry *reading); 
+	std::normal_distribution<double> compute_y_gauss(nav_msgs::Odometry *reading);
 };
 
 #endif
