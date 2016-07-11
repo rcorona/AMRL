@@ -11,7 +11,7 @@
 
 struct Error {
 	double variance_proportion; 
-	double mean; 
+	double mean_proportion; 
 };
 
 struct ErrorModel {
@@ -31,7 +31,10 @@ public:
 	int get_num_particles();
 	particle_filter::Particle_vector get_particles();
 
+	//Main particle filter algorithm methods. 
 	void elapse_time(nav_msgs::Odometry *odom); 
+	void weigh_particles(); // TODO add sensor readings.  
+	void resample_particles(); 
 
 private:
 	std::default_random_engine engine; 
@@ -51,6 +54,12 @@ private:
 
 	//Elapses time for particle. 
 	void elapse_particle_time(particle_filter::Particle *particle, nav_msgs::Odometry *reading);
+
+	//Weights particles based on sensor readings. 
+	void weigh_particle(particle_filter::Particle *particle); // TODO add sensor reading.  
+
+	//Resamples particle based on the weighted particle distribution. 
+	void resample_particle(particle_filter::Particle *particle); 
 
 	//Methods for computing error gaussians. 
 	std::normal_distribution<double> compute_x_gauss(nav_msgs::Odometry *reading);

@@ -12,8 +12,8 @@ ParticleFilter::ParticleFilter() {
 	this->forward_error.y_error.variance_proportion = 0.00547198644888 / 2.0;
 
 	//Set forward error mean per dimension.
-	this->forward_error.x_error.mean = -0.132360749038;
-	this->forward_error.y_error.mean = -0.730145944702;
+	this->forward_error.x_error.mean_proportion = -0.132360749038 / 2.0;
+	this->forward_error.y_error.mean_proportion = -0.730145944702 / 2.0;
 
 	//Sets odometry reading to null. 
 	this->odom = 0; 
@@ -85,9 +85,20 @@ void ParticleFilter::elapse_particle_time(particle_filter::Particle *particle, n
 	particle->pose.y += reading->pose.pose.position.y - y_gauss(this->engine); 
 }
 
+void ParticleFilter::weigh_particles() {
+	//Weighs each individual particle. 
+	for (int i = 0; i < this->num_particles; i++)
+		this->weigh_particle(&this->particles.particles[i]); 
+}
+
+void ParticleFilter::weigh_particle(particle_filter::Particle *particle) {
+	//TODO add sensor readings to actually weight particle.
+	particle->weight = 1.0; 
+}
+
 std::normal_distribution<double> ParticleFilter::compute_x_gauss(nav_msgs::Odometry *reading) {
 	//Computes mean based on forward error model. 
-	double mean = this->forward_error.x_error.mean; //TODO Make dynamic to magnitude of movement. 
+	double mean = this->forward_error.x_error.mean_proportion * reading->pose.pose.position.x; 
 
 	//Computes variance and standard deviation based on forward error model.
 	double variance = this->forward_error.x_error.variance_proportion * reading->pose.pose.position.x; 
@@ -98,7 +109,7 @@ std::normal_distribution<double> ParticleFilter::compute_x_gauss(nav_msgs::Odome
 
 std::normal_distribution<double> ParticleFilter::compute_y_gauss(nav_msgs::Odometry *reading) {
 	//Computes mean based on forward error model. 
-	double mean = this->forward_error.y_error.mean; //TODO Make dynamic to magnitude of movement. 
+	double mean = this->forward_error.y_error.mean_proportion * reading->pose.pose.position.y;
 
 	//Computes variance and standard deviation based on forward error model.
 	double variance = this->forward_error.x_error.variance_proportion * reading->pose.pose.position.y; 
