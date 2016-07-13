@@ -10,13 +10,11 @@ int main(int argc, char **argv) {
 
 	//Initialize publisher and rate. 
 	ros::Publisher pub = node.advertise<particle_filter::Particle_vector>("particle_filter", 1000); 
-	ros::Rate loop_rate(1); 
+	ros::Rate loop_rate(10); 
 
 	//Initialises the particle filter. 
 	ParticleFilter pf; 
 	pf.init(50);
-
-	int count = 0;
 
 	//Sets initial test odometry reading. 
 	nav_msgs::Odometry odom;
@@ -28,8 +26,6 @@ int main(int argc, char **argv) {
 		pub.publish(pf.get_particles()); 
 		ros::spinOnce(); 
 		loop_rate.sleep(); 
-
-		count++;
 
 		//Elapses time for the filter. 
 		odom.pose.pose.position.x += 2.0; 

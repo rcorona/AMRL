@@ -9,12 +9,12 @@
 
 ParticleFilter::ParticleFilter() {
 	//Set forward error variance proportions. 
-	forward_error.x_error.variance_proportion = 0.00111778179015 / 2.0;
-	forward_error.y_error.variance_proportion = 0.00547198644888 / 2.0;
+	translation_error.translation_error.variance_proportion = 0.00111778179015 / 2.0;
+	translation_error.rotation_error.variance_proportion = 0.00547198644888 / 2.0;
 
 	//Set forward error mean per dimension.
-	forward_error.x_error.mean_proportion = -0.132360749038 / 2.0;
-	forward_error.y_error.mean_proportion = -0.730145944702 / 2.0;
+	translation_error.translation_error.mean_proportion = -0.132360749038 / 2.0;
+	translation_error.rotation_error.mean_proportion = -0.730145944702 / 2.0;
 
 	//Sets odometry reading to null. 
 	odom = 0;
@@ -36,7 +36,7 @@ particle_filter::Particle_vector ParticleFilter::get_particles() {
 
 void ParticleFilter::init(int num_particles) {
 	//Resizes particle vector. 
-	num_particles = num_particles; 
+	this->num_particles = num_particles; 
 	particles.particles.resize(num_particles); 
 
 	for (int i = 0; i < num_particles; i++) {
@@ -46,44 +46,69 @@ void ParticleFilter::init(int num_particles) {
 	}
 }
 
-nav_msgs::Odometry ParticleFilter::get_odom_diff(nav_msgs::Odometry *odom) {
+nav_msgs::Odometry ParticleFilter::get_odom_diff(nav_msgs::Odometry *odom_reading) {
 	//Will contain difference in readings. 
 	nav_msgs::Odometry diff; 
 
 	//Computes differences. 
-	diff.pose.pose.position.x = odom->pose.pose.position.x - odom->pose.pose.position.x; 
-	diff.pose.pose.position.y = odom->pose.pose.position.y - odom->pose.pose.position.y; 
+	diff.pose.pose.position.x = odom_reading->pose.pose.position.x - odom->pose.pose.position.x; 
+	diff.pose.pose.position.y = odom_reading->pose.pose.position.y - odom->pose.pose.position.y;
+
+	//Remembers reading for next iteration. 
+	odom->pose.pose.position.x = odom_reading->pose.pose.position.x; 
+	odom->pose.pose.position.y = odom_reading->pose.pose.position.y; 
 
 	return diff; 
 }
 
-void ParticleFilter::elapse_time(nav_msgs::Odometry *odom) {
+void ParticleFilter::elapse_time(nav_msgs::Odometry *odom_reading) {
 	//Initializes current reading if needed. 
 	if (!odom) {
 		odom = new nav_msgs::Odometry();
 
 		//Copies values. 
-		odom->pose.pose.position.x = odom->pose.pose.position.x; 
-		odom->pose.pose.position.y = odom->pose.pose.position.y; 
+		odom->pose.pose.position.x = odom_reading->pose.pose.position.x; 
+		odom->pose.pose.position.y = odom_reading->pose.pose.position.y; 
 	}
 
-
 	//Gets reported difference in odometry since last reading. 
-	nav_msgs::Odometry odom_diff = get_odom_diff(odom);
+	nav_msgs::Odometry odom_diff = get_odom_diff(odom_reading);
+
+	//Compute translation gaussian based on reading. 
+	compute_translation_gauss(odom_reading); 
 
 	//Elapses time for each particle given the reading.
 	for (int i = 0; i < num_particles; i++)
 		elapse_particle_time(&particles.particles[i], &odom_diff); 
 }
 
-void ParticleFilter::elapse_particle_time(particle_filter::Particle *particle, nav_msgs::Odometry *reading) {
-	//Generates gaussians for particle's translation error.  
-	std::normal_distribution<double> x_gauss = compute_x_gauss(reading); 
-	std::normal_distribution<double> y_gauss = compute_y_gauss(reading);
+double ParticleFilter::get_rotation_from_odom(nav_msgs::Odometry *reading) {
+	//Gets quaternion values.
+	double x = reading->pose.pose.orientation.x; 
+	double y = reading->pose.pose.orientation.y;
+	double z = reading->pose.pose.orientation.z;
+	double w = reading->pose.pose.orientation.w; 
 
-	//Samples and sets new particle state.
-	particle->pose.x += reading->pose.pose.position.x - x_gauss(generator);
-	particle->pose.y += reading->pose.pose.position.y - y_gauss(generator); 
+	Eigen::Quaternion<double> quaternion(x, y, z, w); 
+
+	//Gets rotation matrix from quaternion.
+	Eigen::Matrix<double, 3, 3> rotation_matrix = quaternion.normalized().toRotationMatrix(); 
+
+	//Gets Euler angles from the matrix. 
+	Eigen::Matrix<double, 3, 1> angles = rotation_matrix.eulerAngles(2, 1, 0); 
+
+	//Returns yaw (i.e. rotation in heading).  
+	return angles(2); 
+}
+
+void ParticleFilter::elapse_particle_time(particle_filter::Particle *particle, nav_msgs::Odometry *reading) {
+	//Estimates translation using error model and odometry estimate. 
+	double odometry_trans = sqrt(pow(reading->pose.pose.position.x, 2) + pow(reading->pose.pose.position.y, 2));
+	double translation_estimate = odometry_trans + translation_gauss(generator);
+
+	//Gets rotation readings from odometry.
+	double rotation_reading = get_rotation_from_odom(reading);
+	double rotation_estimate = rotation_reading; //TODO add error. 
 }
 
 void ParticleFilter::weigh_particles() {
@@ -97,26 +122,18 @@ void ParticleFilter::weigh_particle(particle_filter::Particle *particle) {
 	particle->weight = 1.0; 
 }
 
-std::normal_distribution<double> ParticleFilter::compute_x_gauss(nav_msgs::Odometry *reading) {
+void ParticleFilter::compute_translation_gauss(nav_msgs::Odometry *reading) {
+	//Gets estimated total translation. 
+	double estimated_translation = sqrt(pow(reading->pose.pose.position.x, 2) + pow(reading->pose.pose.position.y, 2));
+
 	//Computes mean based on forward error model. 
-	double mean = forward_error.x_error.mean_proportion * reading->pose.pose.position.x; 
+	double mean = translation_error.translation_error.mean_proportion * estimated_translation;  
 
 	//Computes variance and standard deviation based on forward error model.
-	double variance = forward_error.x_error.variance_proportion * reading->pose.pose.position.x; 
+	double variance = translation_error.translation_error.variance_proportion * estimated_translation; 
 	double std_dev = sqrt(variance);  
 
-	return std::normal_distribution<double>(mean, std_dev); 
-}
-
-std::normal_distribution<double> ParticleFilter::compute_y_gauss(nav_msgs::Odometry *reading) {
-	//Computes mean based on forward error model. 
-	double mean = forward_error.y_error.mean_proportion * reading->pose.pose.position.y;
-
-	//Computes variance and standard deviation based on forward error model.
-	double variance = forward_error.x_error.variance_proportion * reading->pose.pose.position.y; 
-	double std_dev = sqrt(variance);  
-
-	return std::normal_distribution<double>(mean, std_dev); 
+	translation_gauss = std::normal_distribution<double>(mean, std_dev); 
 }
 
 void ParticleFilter::resample_particles() {

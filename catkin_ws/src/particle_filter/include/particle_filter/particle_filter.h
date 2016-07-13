@@ -9,6 +9,8 @@
 #include <iostream>
 #include <math.h>
 #include <algorithm>
+#include <eigen3/Eigen/Geometry>
+
 
 struct Error {
 	double variance_proportion; 
@@ -16,9 +18,8 @@ struct Error {
 };
 
 struct ErrorModel {
-	Error x_error; 
-	Error y_error; 
-	Error theta_error;
+	Error translation_error; 
+	Error rotation_error; 
 };
 
 class ParticleFilter {
@@ -38,10 +39,15 @@ public:
 	void resample_particles(); 
 
 private:
+	//Random number generator. 
 	std::default_random_engine generator; 
 	
+	//Gaussians used for sampling. 
+	std::normal_distribution<double> translation_gauss; 
+	std::normal_distribution<double> rotation_gauss; 
+
 	//Error models. 
-	ErrorModel forward_error;
+	ErrorModel translation_error;
 
 	//Particle set variables. 
 	particle_filter::Particle_vector particles; 
@@ -52,6 +58,9 @@ private:
 
 	//Gets the difference between the current odom reading and the inputted one. 
 	nav_msgs::Odometry get_odom_diff(nav_msgs::Odometry *odom);
+	
+	//Gets rotation in radians from odometry reading. 
+	double get_rotation_from_odom(nav_msgs::Odometry *reading); 
 
 	//Elapses time for particle. 
 	void elapse_particle_time(particle_filter::Particle *particle, nav_msgs::Odometry *reading);
@@ -59,9 +68,8 @@ private:
 	//Weights particles based on sensor readings. 
 	void weigh_particle(particle_filter::Particle *particle); // TODO add sensor reading.  
 
-	//Methods for computing error gaussians. 
-	std::normal_distribution<double> compute_x_gauss(nav_msgs::Odometry *reading);
-	std::normal_distribution<double> compute_y_gauss(nav_msgs::Odometry *reading);
+	//Methods for computing error gaussians.
+	void compute_translation_gauss(nav_msgs::Odometry *reading); 
 };
 
 #endif
