@@ -73,7 +73,7 @@ private:
 	void weigh_particle(Particle *particle); // TODO add sensor reading.  
 
 	//Methods for computing error gaussians.
-	void compute_translation_gauss(Pose *reading); 
+	void compute_translation_gaussians(Pose *reading); 
 };
 
 #endif

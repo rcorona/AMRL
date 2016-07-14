@@ -4,4 +4,4 @@ import sys
 import rospy
 import tf
 
-print tf.transformations.euler_from_quaternion([0.0, 0.0, -0.22, 0.77])
+print tf.transformations.euler_from_quaternion([0.0, 0.0, 0.0, 0.0])

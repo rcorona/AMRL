@@ -66,12 +66,16 @@ int main(int argc, char **argv) {
 
 	//Initialises the particle filter. 
 	ParticleFilter pf; 
-	pf.init(50);
+	pf.init(500);
 
 	//Sets initial test odometry reading. 
 	nav_msgs::Odometry odom;
 	odom.pose.pose.position.x = 0.0; 
-	odom.pose.pose.position.y = 0.0; 
+	odom.pose.pose.position.y = 0.0;
+	odom.pose.pose.orientation.x = 0.0; 
+	odom.pose.pose.orientation.y = 0.0;
+	odom.pose.pose.orientation.z = 0.0;
+	odom.pose.pose.orientation.w = 0.0;
 
 	while (ros::ok()) {
 		//Publishes current set of particles and sleeps.
@@ -80,8 +84,9 @@ int main(int argc, char **argv) {
 		loop_rate.sleep(); 
 
 		//Elapses time for the filter. 
-		odom.pose.pose.position.x += 2.0; 
-		odom.pose.pose.position.y += 2.0; 
+		odom.pose.pose.position.x += 1.0; 
+		odom.pose.pose.position.y += 0.0;
+
 		Pose reading = odom_to_pose_reading(&odom); 
 		pf.elapse_time(&reading);
 
