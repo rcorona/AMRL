@@ -1,7 +1,4 @@
-#include <ros/ros.h>
 #include <particle_filter/particle_filter.h>
-#include <particle_filter/Particle_vector.h>
-#include <nav_msgs/Odometry.h>
 #include <iostream> 
 #include <random>
 #include <math.h>
@@ -30,101 +27,83 @@ int ParticleFilter::get_num_particles() {
 	return num_particles; 
 }
 
-particle_filter::Particle_vector ParticleFilter::get_particles() {
+std::vector<Particle> ParticleFilter::get_particles() {
 	return particles; 
 }
 
 void ParticleFilter::init(int num_particles) {
 	//Resizes particle vector. 
 	this->num_particles = num_particles; 
-	particles.particles.resize(num_particles); 
+	particles.resize(num_particles); 
 
 	for (int i = 0; i < num_particles; i++) {
-		particles.particles[i].pose.x = 0.0;
-		particles.particles[i].pose.y = 0.0; 
-		particles.particles[i].pose.theta = 0.0; 
+		particles[i].pose.x = 0.0;
+		particles[i].pose.y = 0.0; 
+		particles[i].pose.theta = 0.0; 
 	}
 }
 
-nav_msgs::Odometry ParticleFilter::get_odom_diff(nav_msgs::Odometry *odom_reading) {
+Pose ParticleFilter::get_odom_diff(Pose *odom_reading) {
 	//Will contain difference in readings. 
-	nav_msgs::Odometry diff; 
+	Pose diff; 
 
 	//Computes differences. 
-	diff.pose.pose.position.x = odom_reading->pose.pose.position.x - odom->pose.pose.position.x; 
-	diff.pose.pose.position.y = odom_reading->pose.pose.position.y - odom->pose.pose.position.y;
+	diff.x = odom_reading->x - odom->x; 
+	diff.y = odom_reading->y - odom->y;
 
 	//Remembers reading for next iteration. 
-	odom->pose.pose.position.x = odom_reading->pose.pose.position.x; 
-	odom->pose.pose.position.y = odom_reading->pose.pose.position.y; 
+	odom->x = odom_reading->x; 
+	odom->y = odom_reading->y; 
 
 	return diff; 
 }
 
-void ParticleFilter::elapse_time(nav_msgs::Odometry *odom_reading) {
+void ParticleFilter::elapse_time(Pose *odom_reading) {
 	//Initializes current reading if needed. 
 	if (!odom) {
-		odom = new nav_msgs::Odometry();
+		odom = new Pose();
 
 		//Copies values. 
-		odom->pose.pose.position.x = odom_reading->pose.pose.position.x; 
-		odom->pose.pose.position.y = odom_reading->pose.pose.position.y; 
+		odom->x = odom_reading->x; 
+		odom->y = odom_reading->y; 
 	}
 
 	//Gets reported difference in odometry since last reading. 
-	nav_msgs::Odometry odom_diff = get_odom_diff(odom_reading);
+	Pose odom_diff = get_odom_diff(odom_reading);
 
 	//Compute translation gaussian based on reading. 
 	compute_translation_gauss(odom_reading); 
 
 	//Elapses time for each particle given the reading.
 	for (int i = 0; i < num_particles; i++)
-		elapse_particle_time(&particles.particles[i], &odom_diff); 
+		elapse_particle_time(&particles[i], &odom_diff); 
 }
 
-double ParticleFilter::get_rotation_from_odom(nav_msgs::Odometry *reading) {
-	//Gets quaternion values.
-	double x = reading->pose.pose.orientation.x; 
-	double y = reading->pose.pose.orientation.y;
-	double z = reading->pose.pose.orientation.z;
-	double w = reading->pose.pose.orientation.w; 
 
-	Eigen::Quaternion<double> quaternion(x, y, z, w); 
 
-	//Gets rotation matrix from quaternion.
-	Eigen::Matrix<double, 3, 3> rotation_matrix = quaternion.normalized().toRotationMatrix(); 
-
-	//Gets Euler angles from the matrix. 
-	Eigen::Matrix<double, 3, 1> angles = rotation_matrix.eulerAngles(2, 1, 0); 
-
-	//Returns yaw (i.e. rotation in heading).  
-	return angles(2); 
-}
-
-void ParticleFilter::elapse_particle_time(particle_filter::Particle *particle, nav_msgs::Odometry *reading) {
+void ParticleFilter::elapse_particle_time(Particle *particle, Pose *reading) {
 	//Estimates translation using error model and odometry estimate. 
-	double odometry_trans = sqrt(pow(reading->pose.pose.position.x, 2) + pow(reading->pose.pose.position.y, 2));
+	double odometry_trans = sqrt(pow(reading->x, 2) + pow(reading->y, 2));
 	double translation_estimate = odometry_trans + translation_gauss(generator);
 
 	//Gets rotation readings from odometry.
-	double rotation_reading = get_rotation_from_odom(reading);
-	double rotation_estimate = rotation_reading; //TODO add error. 
+	double rotation_estimate = reading->theta; //TODO add error. 
 }
 
 void ParticleFilter::weigh_particles() {
 	//Weighs each individual particle. 
 	for (int i = 0; i < num_particles; i++)
-		weigh_particle(&particles.particles[i]); 
+		weigh_particle(&particles[i]); 
 }
 
-void ParticleFilter::weigh_particle(particle_filter::Particle *particle) {
+void ParticleFilter::weigh_particle(Particle *particle) {
 	//TODO add sensor readings to actually weight particle.
 	particle->weight = 1.0; 
 }
 
-void ParticleFilter::compute_translation_gauss(nav_msgs::Odometry *reading) {
+void ParticleFilter::compute_translation_gauss(Pose *reading) {
 	//Gets estimated total translation. 
-	double estimated_translation = sqrt(pow(reading->pose.pose.position.x, 2) + pow(reading->pose.pose.position.y, 2));
+	double estimated_translation = sqrt(pow(reading->x, 2) + pow(reading->y, 2));
 
 	//Computes mean based on forward error model. 
 	double mean = translation_error.translation_error.mean_proportion * estimated_translation;  
@@ -141,14 +120,14 @@ void ParticleFilter::resample_particles() {
 	double w_sum = 0.0;
 
 	for (int i = 1; i < num_particles; i++)
-		w_sum += particles.particles[i].weight; 
+		w_sum += particles[i].weight; 
 
 	//Computes cumulative sum vector of normalized weights. 
 	std::vector<double> c_sum(num_particles); 
-	c_sum[0] = particles.particles[0].weight / w_sum; 
+	c_sum[0] = particles[0].weight / w_sum; 
 
 	for (int i = 1; i < num_particles; i++)
-		c_sum[i] = c_sum[i - 1] + particles.particles[i].weight / w_sum;
+		c_sum[i] = c_sum[i - 1] + particles[i].weight / w_sum;
 
 	//Computes vector of random numbers and sorts them for resampling.  
 	std::vector<double> samples = std::vector<double>(num_particles);
@@ -161,13 +140,13 @@ void ParticleFilter::resample_particles() {
 
 	//Determines which particle indeces were sampled. 
 	int i = 0, j = 0; 
-	std::vector<particle_filter::Particle> new_particles = std::vector<particle_filter::Particle>(num_particles); 
+	std::vector<Particle> new_particles = std::vector<Particle>(num_particles); 
 
 	while (i < num_particles) {
 		//If true, then current particle's new state corresponds to the j'th particle's state. 
 		if (samples[i] < c_sum[j]) {
 			//Copies particle. 
-			new_particles[i] = particles.particles[j]; 
+			new_particles[i] = particles[j]; 
 			i++; 
 		}
 		else
@@ -175,5 +154,5 @@ void ParticleFilter::resample_particles() {
 	}
 
 	//Updates particles to reflect resampled values. 
-	particles.particles = new_particles; 
+	particles = new_particles; 
 }

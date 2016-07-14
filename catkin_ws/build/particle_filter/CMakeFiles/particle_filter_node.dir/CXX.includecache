@@ -59,12 +59,6 @@ ros/message_operations.h
 -
 
 /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/src/particle_filter/include/particle_filter/particle_filter.h
-ros/ros.h
--
-particle_filter/Particle_vector.h
--
-nav_msgs/Odometry.h
--
 random
 -
 vector
@@ -86,6 +80,8 @@ particle_filter/Particle_vector.h
 ros/ros.h
 -
 nav_msgs/Odometry.h
+-
+eigen3/Eigen/Geometry
 -
 
 /opt/ros/indigo/include/XmlRpcDecl.h
