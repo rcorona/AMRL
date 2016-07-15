@@ -4,6 +4,23 @@
 #include <nav_msgs/Odometry.h>
 #include <eigen3/Eigen/Geometry>
 
+//For testing TODO move back into main. 
+nav_msgs::Odometry odom;
+
+double gps_weight(Particle *particle) {
+	double x_weight = 1 / (2.172 + exp(std::abs(particle->pose.x - odom.pose.pose.position.x))); 
+	double y_weight = 1 / (7.721 + exp(std::abs(particle->pose.y - odom.pose.pose.position.y)));
+
+	return x_weight * y_weight; 
+}
+
+void weigh_using_gps(Particle *particle, void **args) {
+	// TODO actually read gps readings. 
+
+	//Weighs particle using experimentally determined loss function. 
+	particle->weight = gps_weight(particle); 
+}
+
 double get_rotation_from_odom(nav_msgs::Odometry *reading) {
 	//Gets quaternion values.
 	double x = reading->pose.pose.orientation.x; 
@@ -43,7 +60,7 @@ particle_filter::Particle_vector read_in_particles(std::vector<Particle> particl
 }
 
 Pose odom_to_pose_reading(nav_msgs::Odometry *odom) {
-	Pose reading; 
+	Pose reading;
 
 	//Gets translational reading. 
 	reading.x = odom->pose.pose.position.x; 
@@ -66,10 +83,9 @@ int main(int argc, char **argv) {
 
 	//Initialises the particle filter. 
 	ParticleFilter pf; 
-	pf.init(500);
+	pf.init(1000, &weigh_using_gps);
 
 	//Sets initial test odometry reading. 
-	nav_msgs::Odometry odom;
 	odom.pose.pose.position.x = 0.0; 
 	odom.pose.pose.position.y = 0.0;
 	odom.pose.pose.orientation.x = 0.0; 
@@ -91,7 +107,7 @@ int main(int argc, char **argv) {
 		pf.elapse_time(&reading);
 
 		//Weighs particles based on sensor readings. //TODO add sensor readings. 
-		pf.weigh_particles();
+		pf.weigh_particles(0);
 
 		//Now resamples them. 
 		pf.resample_particles(); 

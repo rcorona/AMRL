@@ -13,7 +13,7 @@ def plot_particles(rosbag_name):
 
     for topic, msg, t in bag.read_messages():
         if topic == '/particle_filter':
-            if counter <= 10: 
+            if counter <= 30: 
                 x_points = []
                 y_points = []
 
@@ -25,8 +25,8 @@ def plot_particles(rosbag_name):
 
             counter += 1
     
-    plt.gca().set_xlim([-10, 100])
-    plt.gca().set_ylim([-15, 60])
+    plt.gca().set_xlim([0, 50])
+    plt.gca().set_ylim([-35, 30])
     plt.show()
              
 

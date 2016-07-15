@@ -34,7 +34,7 @@ public:
 	ParticleFilter(); 
 	~ParticleFilter(); 
 
-	void init(int num_particles);
+	void init(int num_particles, void (*weighing_func)(Particle *, void **));
 
 	//Getters. 
 	int get_num_particles();
@@ -42,7 +42,7 @@ public:
 
 	//Main particle filter algorithm methods. 
 	void elapse_time(Pose *odom_reading); 
-	void weigh_particles(); // TODO add sensor readings.  
+	void weigh_particles(void **args); // TODO add sensor readings.  
 	void resample_particles(); 
 
 private:
@@ -63,14 +63,14 @@ private:
 	//Keeps latest odometry readings for reference.
 	Pose *odom;
 
+	//Particle weighing function pointer, allows for modularity of filter.  
+	void (*weighing_function)(Particle *, void **); 
+
 	//Gets the difference between the current odom reading and the inputted one. 
 	Pose get_odom_diff(Pose *odom_reading);
 	
 	//Elapses time for particle. 
 	void elapse_particle_time(Particle *particle, Pose *reading);
-
-	//Weights particles based on sensor readings. 
-	void weigh_particle(Particle *particle); // TODO add sensor reading.  
 
 	//Methods for computing error gaussians.
 	void compute_translation_gaussians(Pose *reading); 

@@ -16,8 +16,8 @@ ParticleFilter::ParticleFilter() {
 	translation_error.translation_error.mean_proportion = 0.04622973302600004 / mean_movement;
 	translation_error.rotation_error.mean_proportion = -0.73868934197905 / mean_movement;
 
-	translation_error.rotation_error.variance_proportion = 0.011277530205 / mean_movement;
-	translation_error.rotation_error.mean_proportion = -0.07 / mean_movement;
+	translation_error.rotation_error.variance_proportion = 0.0011277530205 / mean_movement;
+	translation_error.rotation_error.mean_proportion = -0.001 / mean_movement;
 
 	//Sets odometry reading to null. 
 	odom = 0;
@@ -37,7 +37,7 @@ std::vector<Particle> ParticleFilter::get_particles() {
 	return particles; 
 }
 
-void ParticleFilter::init(int num_particles) {
+void ParticleFilter::init(int num_particles, void (*weighing_func)(Particle *, void **)) {
 	//Resizes particle vector. 
 	this->num_particles = num_particles; 
 	particles.resize(num_particles); 
@@ -47,6 +47,9 @@ void ParticleFilter::init(int num_particles) {
 		particles[i].pose.y = 0.0; 
 		particles[i].pose.theta = 0.0; 
 	}
+
+	//Sets weighing function to given one. 
+	weighing_function = weighing_func; 
 }
 
 Pose ParticleFilter::get_odom_diff(Pose *odom_reading) {
@@ -106,15 +109,10 @@ void ParticleFilter::elapse_particle_time(Particle *particle, Pose *reading) {
 	particle->pose.theta = orientation_estimate; 
 }
 
-void ParticleFilter::weigh_particles() {
+void ParticleFilter::weigh_particles(void **args) {
 	//Weighs each individual particle. 
 	for (int i = 0; i < num_particles; i++)
-		weigh_particle(&particles[i]); 
-}
-
-void ParticleFilter::weigh_particle(Particle *particle) {
-	//TODO add sensor readings to actually weight particle.
-	particle->weight = 1.0; 
+		weighing_function(&particles[i], args); 
 }
 
 void ParticleFilter::compute_translation_gaussians(Pose *reading) {
