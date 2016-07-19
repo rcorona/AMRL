@@ -16,7 +16,7 @@ ParticleFilter::ParticleFilter() {
 	translation_error.translation_error.mean_proportion = 0.04622973302600004 / mean_movement;
 	translation_error.rotation_error.mean_proportion = -0.73868934197905 / mean_movement;
 
-	translation_error.rotation_error.variance_proportion = 0.0011277530205 / mean_movement;
+	translation_error.rotation_error.variance_proportion = 0.0892057412511;//0.0011277530205 / mean_movement;
 	translation_error.rotation_error.mean_proportion = -0.001 / mean_movement;
 
 	//Sets odometry reading to null. 
@@ -31,6 +31,10 @@ ParticleFilter::~ParticleFilter() {
 
 int ParticleFilter::get_num_particles() {
 	return num_particles; 
+}
+
+Pose ParticleFilter::get_pose_estimate() {
+	return pose_estimate; 
 }
 
 std::vector<Particle> ParticleFilter::get_particles() {
@@ -84,14 +88,15 @@ void ParticleFilter::elapse_time(Pose *odom_reading) {
 	Pose odom_diff = get_odom_diff(odom_reading);
 
 	//Compute translation gaussian based on reading. 
-	compute_translation_gaussians(odom_reading); 
+	compute_translation_gaussians(&odom_diff); 
 
 	//Elapses time for each particle given the reading.
 	for (int i = 0; i < num_particles; i++)
-		elapse_particle_time(&particles[i], &odom_diff); 
+		elapse_particle_time(&particles[i], &odom_diff);
+
+	//Estimates current position. 
+	estimate_current_position(); 
 }
-
-
 
 void ParticleFilter::elapse_particle_time(Particle *particle, Pose *reading) {
 	//Estimates translation using error model and odometry estimate. 
@@ -106,7 +111,7 @@ void ParticleFilter::elapse_particle_time(Particle *particle, Pose *reading) {
 	particle->pose.y += translation_estimate * sin(orientation_estimate);
 
 	//Updates orientation. TODO Should second rotation error be added? 
-	particle->pose.theta = orientation_estimate; 
+	particle->pose.theta = orientation_estimate + reading->theta;
 }
 
 void ParticleFilter::weigh_particles(void **args) {
@@ -174,4 +179,20 @@ void ParticleFilter::resample_particles() {
 
 	//Updates particles to reflect resampled values. 
 	particles = new_particles; 
+}
+
+void ParticleFilter::estimate_current_position() {
+	double x_sum = 0.0, y_sum = 0.0, theta_sum = 0.0; 
+
+	//Sums particle pose values. 
+	for (int i = 0; i < num_particles; i++) {
+		x_sum += particles[i].pose.x;
+		y_sum += particles[i].pose.y; 
+		theta_sum += particles[i].pose.theta; 
+	}
+
+	//Averages them to estimate position. 
+	pose_estimate.x = x_sum / static_cast<double>(num_particles);
+	pose_estimate.y = y_sum / static_cast<double>(num_particles); 
+	pose_estimate.theta = theta_sum / static_cast<double>(num_particles); 
 }

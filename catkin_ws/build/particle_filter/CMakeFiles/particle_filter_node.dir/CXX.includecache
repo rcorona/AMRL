@@ -41,6 +41,8 @@ ros/message_operations.h
 -
 particle_filter/Particle.h
 -
+particle_filter/Pose.h
+-
 
 /home/rudy/Desktop/UMASS/CICS/data/catkin_ws/devel/include/particle_filter/Pose.h
 string
@@ -77,9 +79,13 @@ particle_filter/particle_filter.h
 -
 particle_filter/Particle_vector.h
 -
+particle_filter/Pose.h
+-
 ros/ros.h
 -
 nav_msgs/Odometry.h
+-
+sensor_msgs/NavSatFix.h
 -
 eigen3/Eigen/Geometry
 -
@@ -871,6 +877,42 @@ ros/forwards.h
 /opt/ros/indigo/include/ros/ros/forwards.h
 
 /opt/ros/indigo/include/rosconsole/macros_generated.h
+
+/opt/ros/indigo/include/sensor_msgs/NavSatFix.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+sensor_msgs/NavSatStatus.h
+-
+
+/opt/ros/indigo/include/sensor_msgs/NavSatStatus.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
 
 /opt/ros/indigo/include/std_msgs/Header.h
 string

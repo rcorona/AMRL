@@ -16,6 +16,7 @@
 #include <ros/message_operations.h>
 
 #include <particle_filter/Particle.h>
+#include <particle_filter/Pose.h>
 
 namespace particle_filter
 {
@@ -25,16 +26,21 @@ struct Particle_vector_
   typedef Particle_vector_<ContainerAllocator> Type;
 
   Particle_vector_()
-    : particles()  {
+    : particles()
+    , pose_estimate()  {
     }
   Particle_vector_(const ContainerAllocator& _alloc)
-    : particles(_alloc)  {
+    : particles(_alloc)
+    , pose_estimate(_alloc)  {
     }
 
 
 
    typedef std::vector< ::particle_filter::Particle_<ContainerAllocator> , typename ContainerAllocator::template rebind< ::particle_filter::Particle_<ContainerAllocator> >::other >  _particles_type;
   _particles_type particles;
+
+   typedef  ::particle_filter::Pose_<ContainerAllocator>  _pose_estimate_type;
+  _pose_estimate_type pose_estimate;
 
 
 
@@ -113,12 +119,12 @@ struct MD5Sum< ::particle_filter::Particle_vector_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "1011eaf19eb1e2338cfeb6b0c73b6b4f";
+    return "3ac188ff3c52decc5d6ddfaf7ecb36f3";
   }
 
   static const char* value(const ::particle_filter::Particle_vector_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x1011eaf19eb1e233ULL;
-  static const uint64_t static_value2 = 0x8cfeb6b0c73b6b4fULL;
+  static const uint64_t static_value1 = 0x3ac188ff3c52deccULL;
+  static const uint64_t static_value2 = 0x5d6ddfaf7ecb36f3ULL;
 };
 
 template<class ContainerAllocator>
@@ -138,6 +144,7 @@ struct Definition< ::particle_filter::Particle_vector_<ContainerAllocator> >
   static const char* value()
   {
     return "Particle[] particles\n\
+Pose pose_estimate\n\
 \n\
 ================================================================================\n\
 MSG: particle_filter/Particle\n\
@@ -168,6 +175,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.particles);
+      stream.next(m.pose_estimate);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER;
@@ -194,6 +202,9 @@ struct Printer< ::particle_filter::Particle_vector_<ContainerAllocator> >
       s << indent;
       Printer< ::particle_filter::Particle_<ContainerAllocator> >::stream(s, indent + "    ", v.particles[i]);
     }
+    s << indent << "pose_estimate: ";
+    s << std::endl;
+    Printer< ::particle_filter::Pose_<ContainerAllocator> >::stream(s, indent + "  ", v.pose_estimate);
   }
 };
 

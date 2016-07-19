@@ -27,6 +27,20 @@ def plot_particles(rosbag_name):
     
     plt.gca().set_xlim([0, 50])
     plt.gca().set_ylim([-35, 30])
+
+    plt.arrow(0, 0, 50, 0)
+   
+    plt.ylabel("y (m)")
+    plt.xlabel("x (m)")
+
+    #Title
+    if len(sys.argv) > 2:
+        title = sys.argv[2]
+    else:
+        title = ""
+
+    plt.title(title)
+
     plt.show()
              
 

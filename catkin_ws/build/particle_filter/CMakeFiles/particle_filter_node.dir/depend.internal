@@ -74,4 +74,6 @@ particle_filter/CMakeFiles/particle_filter_node.dir/src/particle_filter_node.cpp
  /opt/ros/indigo/include/ros/wall_timer.h
  /opt/ros/indigo/include/ros/wall_timer_options.h
  /opt/ros/indigo/include/rosconsole/macros_generated.h
+ /opt/ros/indigo/include/sensor_msgs/NavSatFix.h
+ /opt/ros/indigo/include/sensor_msgs/NavSatStatus.h
  /opt/ros/indigo/include/std_msgs/Header.h

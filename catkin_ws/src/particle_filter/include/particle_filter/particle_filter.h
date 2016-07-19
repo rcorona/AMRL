@@ -14,7 +14,7 @@ struct Error {
 };
 
 struct ErrorModel {
-	Error translation_error; 
+	Error translation_error;
 	Error rotation_error; 
 };
 
@@ -39,6 +39,7 @@ public:
 	//Getters. 
 	int get_num_particles();
 	std::vector<Particle> get_particles();
+	Pose get_pose_estimate(); 
 
 	//Main particle filter algorithm methods. 
 	void elapse_time(Pose *odom_reading); 
@@ -59,6 +60,10 @@ private:
 	//Particle set variables. 
 	std::vector<Particle> particles; 
 	int num_particles;
+
+	//Keeps estimate of robot's pose. 
+	Pose pose_estimate;
+	void estimate_current_position(); 
 
 	//Keeps latest odometry readings for reference.
 	Pose *odom;

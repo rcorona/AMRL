@@ -8,10 +8,11 @@ import struct
 import particle_filter.msg
 
 class Particle_vector(genpy.Message):
-  _md5sum = "1011eaf19eb1e2338cfeb6b0c73b6b4f"
+  _md5sum = "3ac188ff3c52decc5d6ddfaf7ecb36f3"
   _type = "particle_filter/Particle_vector"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """Particle[] particles
+Pose pose_estimate
 
 ================================================================================
 MSG: particle_filter/Particle
@@ -25,8 +26,8 @@ float64 y
 float64 theta
 
 """
-  __slots__ = ['particles']
-  _slot_types = ['particle_filter/Particle[]']
+  __slots__ = ['particles','pose_estimate']
+  _slot_types = ['particle_filter/Particle[]','particle_filter/Pose']
 
   def __init__(self, *args, **kwds):
     """
@@ -36,7 +37,7 @@ float64 theta
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       particles
+       particles,pose_estimate
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -47,8 +48,11 @@ float64 theta
       #message fields cannot be None, assign default values for those that are
       if self.particles is None:
         self.particles = []
+      if self.pose_estimate is None:
+        self.pose_estimate = particle_filter.msg.Pose()
     else:
       self.particles = []
+      self.pose_estimate = particle_filter.msg.Pose()
 
   def _get_types(self):
     """
@@ -69,6 +73,8 @@ float64 theta
         _x = _v1
         buff.write(_struct_3d.pack(_x.x, _x.y, _x.theta))
         buff.write(_struct_d.pack(val1.weight))
+      _x = self
+      buff.write(_struct_3d.pack(_x.pose_estimate.x, _x.pose_estimate.y, _x.pose_estimate.theta))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
 
@@ -80,6 +86,8 @@ float64 theta
     try:
       if self.particles is None:
         self.particles = None
+      if self.pose_estimate is None:
+        self.pose_estimate = particle_filter.msg.Pose()
       end = 0
       start = end
       end += 4
@@ -96,6 +104,10 @@ float64 theta
         end += 8
         (val1.weight,) = _struct_d.unpack(str[start:end])
         self.particles.append(val1)
+      _x = self
+      start = end
+      end += 24
+      (_x.pose_estimate.x, _x.pose_estimate.y, _x.pose_estimate.theta,) = _struct_3d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -115,6 +127,8 @@ float64 theta
         _x = _v3
         buff.write(_struct_3d.pack(_x.x, _x.y, _x.theta))
         buff.write(_struct_d.pack(val1.weight))
+      _x = self
+      buff.write(_struct_3d.pack(_x.pose_estimate.x, _x.pose_estimate.y, _x.pose_estimate.theta))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
 
@@ -127,6 +141,8 @@ float64 theta
     try:
       if self.particles is None:
         self.particles = None
+      if self.pose_estimate is None:
+        self.pose_estimate = particle_filter.msg.Pose()
       end = 0
       start = end
       end += 4
@@ -143,6 +159,10 @@ float64 theta
         end += 8
         (val1.weight,) = _struct_d.unpack(str[start:end])
         self.particles.append(val1)
+      _x = self
+      start = end
+      end += 24
+      (_x.pose_estimate.x, _x.pose_estimate.y, _x.pose_estimate.theta,) = _struct_3d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
