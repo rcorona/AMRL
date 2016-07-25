@@ -4,29 +4,109 @@
 #include <math.h>
 #include <algorithm> 
 
-ParticleFilter::ParticleFilter() {
+ParticleFilter::ParticleFilter(int num_particles, void (*weighing_func)(Particle *, void **)) {
+	//Resizes particle vector. 
+	this->num_particles = num_particles; 
+	particles.resize(num_particles); 
+
+	//Sets weighing function to given one. 
+	weighing_function = weighing_func; 
+
 	//Mean actual movement in error model experiments. 
 	double mean_movement = 1.88; 
 
-	//Set forward error variance proportions. 
-	translation_error.translation_error.variance_proportion = 5.2210535585492734e-05 / mean_movement;
-	translation_error.rotation_error.variance_proportion = 0.011277530205766535 / mean_movement;
+	//Set x and y error. 
+	x_error.mean_proportion = -0.12966300393266664;
+	x_error.variance_proportion = 0.1;//0.0012975724500232106; 
 
-	//Set forward error mean per dimension.
-	translation_error.translation_error.mean_proportion = 0.04622973302600004 / mean_movement;
-	translation_error.rotation_error.mean_proportion = -0.73868934197905 / mean_movement;
+	y_error.mean_proportion = 0.7257227026205334;
+	y_error.variance_proportion = 0.25;//0.005870249376260666;
 
-	translation_error.rotation_error.variance_proportion = 0.0892057412511;//0.0011277530205 / mean_movement;
-	translation_error.rotation_error.mean_proportion = -0.001 / mean_movement;
+	//Set rotation error. 
+	rotation_error.variance_proportion = 0.0011277530205 / mean_movement;
+	rotation_error.mean_proportion = 0.01; //-.01 / mean_movement;
 
 	//Sets odometry reading to null. 
 	odom = 0;
+
+	//Initially heading is not calibrated. 
+	calibrated_heading = false;
+
+	calibration_values.odom_start = calibration_values.gps_start = 0; 
+	calibration_values.odom_end = calibration_values.gps_end = 0; 
 }
 
 ParticleFilter::~ParticleFilter() {
 	//Frees odometry reading memory if still allocated. 
 	if (odom)
 		delete odom; 
+}
+
+bool ParticleFilter::calibrated() {
+	return calibrated_heading; 
+}
+
+void ParticleFilter::add_readings_for_calibration(Pose *gps_reading, Pose *odom_reading) {
+	//If first calibration value, then saves it. 
+	if (!calibration_values.odom_start && !calibration_values.gps_start) {
+		calibration_values.odom_start = new Pose(*odom_reading);
+		calibration_values.gps_start = new Pose(*gps_reading); 
+	}
+	else {
+		//If second value not set, see if it's far enough away to mitigate possibility of error. 
+		double dx = gps_reading->x - calibration_values.gps_start->x;  
+		double dy = gps_reading->y - calibration_values.gps_start->y; 
+
+		//Creates new buffer if needed.
+		if (!calibration_values.odom_buff && !calibration_values.gps_buff) {
+			calibration_values.odom_buff = new Pose(*odom_reading); 
+			calibration_values.gps_buff = new Pose(*gps_reading); 
+		}
+		//Checks if we may calibrates heading using first and second readings.
+		else if (sqrt(pow(dx, 2) + pow(dy, 2)) >= 5.0) {
+			//Sets second point values and uses collected poses for calibration. 
+			calibration_values.odom_end = new Pose(*odom_reading); 
+			calibration_values.gps_end = new Pose(*gps_reading); 
+
+			calibrate(); 
+		}
+		else { //Update buffer value. 
+			*calibration_values.odom_buff = *odom_reading; 
+			*calibration_values.gps_buff = *gps_reading; 
+		}
+	}
+}
+
+void ParticleFilter::calibrate() {	
+	//Determines change in x & y for gps coordinates. 
+	double gps_dx = calibration_values.gps_end->x - calibration_values.gps_buff->x; 
+	double gps_dy = calibration_values.gps_end->y - calibration_values.gps_buff->y; 
+
+	//Determines gps estimate of angle. 
+	double gps_theta = atan2(gps_dy, gps_dx);
+
+	//Determines change in x & y for odometry coordinates. 
+	double odom_dx = calibration_values.odom_end->x - calibration_values.odom_buff->x; 
+	double odom_dy = calibration_values.odom_end->y - calibration_values.odom_buff->y; 
+
+	//Determines odometry's angle of translation. 
+	double odom_trans_theta = atan2(odom_dy, odom_dx); 
+
+	//Estimates necessary rotation to convert between odometry and gps translations. 
+	double rot_angle = gps_theta - odom_trans_theta;
+
+	//Creates rotation matrix based on necessary rotation angles.
+	calibration_values.rot_matrix << cos(rot_angle), -sin(rot_angle), sin(rot_angle), cos(rot_angle); 
+
+	//Sets initial position of particles based on calibrations. 
+	for (int i = 0; i < num_particles; i++) {
+		particles[i].pose.x = calibration_values.gps_end->x;
+		particles[i].pose.y = calibration_values.gps_end->y; 
+		particles[i].pose.theta = gps_theta;
+	}
+
+	//Sets calibrated flag so that pose estimate may now be used. 
+	calibrated_heading = true; 
 }
 
 int ParticleFilter::get_num_particles() {
@@ -39,21 +119,6 @@ Pose ParticleFilter::get_pose_estimate() {
 
 std::vector<Particle> ParticleFilter::get_particles() {
 	return particles; 
-}
-
-void ParticleFilter::init(int num_particles, void (*weighing_func)(Particle *, void **)) {
-	//Resizes particle vector. 
-	this->num_particles = num_particles; 
-	particles.resize(num_particles); 
-
-	for (int i = 0; i < num_particles; i++) {
-		particles[i].pose.x = 0.0;
-		particles[i].pose.y = 0.0; 
-		particles[i].pose.theta = 0.0; 
-	}
-
-	//Sets weighing function to given one. 
-	weighing_function = weighing_func; 
 }
 
 Pose ParticleFilter::get_odom_diff(Pose *odom_reading) {
@@ -99,19 +164,26 @@ void ParticleFilter::elapse_time(Pose *odom_reading) {
 }
 
 void ParticleFilter::elapse_particle_time(Particle *particle, Pose *reading) {
-	//Estimates translation using error model and odometry estimate. 
-	double odometry_trans = sqrt(pow(reading->x, 2) + pow(reading->y, 2));
-	double translation_estimate = odometry_trans + translation_gauss(generator);
+	//Samples errors. 
+	double x_error = x_gauss(generator); 
+	double y_error = y_gauss(generator); 
+	double rotation_error = rotation_gauss(generator); 
 
-	//Gets rotation readings from odometry.
-	double orientation_estimate = particle->pose.theta + rotation_gauss(generator);
+	//Vectorizes translation reading. 
+	Eigen::Vector2d reading_v(reading->x, reading->y);
+	
+	//Gets translation vector in gps using rotation matrix. 
+	Eigen::Vector2d converted_reading = calibration_values.rot_matrix * reading_v; 
 
-	//Estimates x and y translations. 
-	particle->pose.x += translation_estimate * cos(orientation_estimate);
-	particle->pose.y += translation_estimate * sin(orientation_estimate);
+	//Gets new pose estimate. 
+	double dx = converted_reading(0); 
+	double dy = converted_reading(1); 
 
-	//Updates orientation. TODO Should second rotation error be added? 
-	particle->pose.theta = orientation_estimate + reading->theta;
+	particle->pose.x += dx - x_error;  
+	particle->pose.y += dx - y_error; 
+
+	//Updates orientation. 
+	particle->pose.theta += reading->theta - rotation_error; 
 }
 
 void ParticleFilter::weigh_particles(void **args) {
@@ -124,18 +196,24 @@ void ParticleFilter::compute_translation_gaussians(Pose *reading) {
 	//Gets estimated total translation. 
 	double estimated_translation = sqrt(pow(reading->x, 2) + pow(reading->y, 2));
 
-	//Computes mean based on forward error model. 
-	double translation_mean = translation_error.translation_error.mean_proportion * estimated_translation;  
-	double rotation_mean = translation_error.rotation_error.mean_proportion * estimated_translation; 
+	//Computes means. 
+	double x_mean = x_error.mean_proportion * estimated_translation;  
+	double y_mean = y_error.mean_proportion * estimated_translation; 
+	double rotation_mean = rotation_error.mean_proportion * estimated_translation; 
 
-	//Computes variance and standard deviation based on forward error model.
-	double translation_variance = translation_error.translation_error.variance_proportion * estimated_translation;
-	double rotation_variance = translation_error.rotation_error.variance_proportion * estimated_translation; 
+	//Computes variances based on forward error model.
+	double x_variance = x_error.variance_proportion * estimated_translation;
+	double y_variance = y_error.variance_proportion * estimated_translation; 
+	double rotation_variance = rotation_error.variance_proportion * estimated_translation; 
 
-	double translation_std_dev = sqrt(translation_variance);  
+	//Computes std deviations. 
+	double x_std_dev = sqrt(x_variance);  
+	double y_std_dev = sqrt(y_variance); 
 	double rotation_std_dev = sqrt(rotation_variance);
 
-	translation_gauss = std::normal_distribution<double>(translation_mean, translation_std_dev); 
+	//Computes gaussians. 
+	x_gauss = std::normal_distribution<double>(x_mean, x_std_dev); 
+	y_gauss = std::normal_distribution<double>(y_mean, y_std_dev); 
 	rotation_gauss = std::normal_distribution<double>(rotation_mean, rotation_std_dev); 
 }
 
@@ -195,4 +273,8 @@ void ParticleFilter::estimate_current_position() {
 	pose_estimate.x = x_sum / static_cast<double>(num_particles);
 	pose_estimate.y = y_sum / static_cast<double>(num_particles); 
 	pose_estimate.theta = theta_sum / static_cast<double>(num_particles); 
+
+	std::cout << "X" << pose_estimate.x << std::endl; 
+	std::cout << "Y" << pose_estimate.y << std::endl;
+	std::cout << "T" << pose_estimate.theta << std::endl; 
 }

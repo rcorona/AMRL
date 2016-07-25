@@ -14,14 +14,21 @@ gps_reading_buff = None
 pub = None
 
 #Globals for testing filter. 
+
+#Set to 1.0 to turn off. 
 global rand_threshold 
 rand_threshold = 1.0
 
+#Set to float('inf') to turn off. 
 global num_threshold 
-num_threshold = 500
+num_threshold = float('inf')
 
 global msg_counter 
 msg_counter = 0
+
+#Set to 1 to turn off. 
+global publish_rate #Used to test skipping readings.
+publish_rate = 1
 
 global distant_pose 
 distant_pose = Pose()
@@ -42,8 +49,9 @@ def converter_callback(gps_reading):
     if gps_origin == None:
         gps_origin = gps_reading
 
-    
-    pub.publish(pose_estimate())
+    #Skips messages (for testing)
+    if msg_counter % publish_rate == 0: 
+        pub.publish(pose_estimate())
 
 def pose_estimate():
     global gps_pose
@@ -58,17 +66,15 @@ def pose_estimate():
         gps_pose.x = 0.0
         gps_pose.y = 0.0
     else:
-        origin = (gps_origin.latitude, gps_origin.longitude)
-
         #Otherwise calculates distance in meters to origin. 
-        gps_pose.x = VincentyDistance(origin, (origin[0], gps_reading_buff.longitude)).meters
-        gps_pose.y = VincentyDistance(origin, (gps_reading_buff.latitude, origin[1])).meters
+        gps_pose.x = VincentyDistance(gps_origin, (gps_origin[0], gps_reading_buff.longitude)).meters
+        gps_pose.y = VincentyDistance(gps_origin, (gps_reading_buff.latitude, gps_origin[1])).meters
 
-        #Corrects signs if necessary. 
-        if origin[1] > gps_reading_buff.longitude:
+        #Corrects signs if necessary.
+        if gps_origin[1] > gps_reading_buff.longitude:
             gps_pose.x = -gps_pose.x
 
-        if origin[0] > gps_reading_buff.latitude:
+        if gps_origin[0] > gps_reading_buff.latitude:
             gps_pose.y = -gps_pose.y
 
     if msg_counter > num_threshold:
@@ -87,6 +93,14 @@ if __name__ == '__main__':
     rospy.init_node("gps_converter", anonymous=True)
     rate = rospy.Rate(10)
 
+    #Opens map coordinate file in order to get origin coordinates. 
+    map_coordinate_file = open(sys.argv[1], 'r')
+
+    #Gets latitude and longitude of origin. 
+    latitude, longitude = map_coordinate_file.readline().strip().split(';')
+
+    gps_origin = (float(latitude), float(longitude)) 
+
     global pub
     pub = rospy.Publisher("gps_pos_meters", Pose, queue_size=10)
 
@@ -99,6 +113,3 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         rospy.spin()
         rate.sleep()
-
-
-
