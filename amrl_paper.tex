@@ -91,11 +91,31 @@ The approach of the particle filter algorithm to the problem of tractability is 
 To accomplish this, the algorithm iterates through three main procedures at each timestep. Firstly, each particle's pose estimate is computed using its previous pose and the current control readings in the \textit{elapse time} step. Following this, the \textit{weighing} step uses the current sensor reading in order to assign weights to each particle's estimate. Finally, in the \textit{resampling} step, a probability distribution of possible poses is computed based on the particle' poses and weights. 
 
 \subsubsection{Elapse Time}
-Poop 
+At each time step $t$ the robot's motion model is used in conjunction with the current control reading $u_t$ in order to derive a new pose for each particle:
+$$
+motion~model~update
+$$
 \subsubsection{Weigh}
+Immediately after receiving a pose estimate, each particle is assigned a weight based on the current sensor model reading $z_t$. In order to effectively use GPS for localization, the latitudinal and longitudinal variances, $\sigma _{lon}^2$ and $\sigma _{lat}^2$ for the Jackal's GPS were approximated experimentally by collecting readings from a set of three marked places five different times. Using these values, the following loss function was derived:
+$$
+f(x)=loss~function
+$$
+This function was then used in order to assign a weight to each particle:
+$$
+w_t=f(\textbf{x}_t)
+$$
 \subsubsection{Resample} 
+Using each particle's weights, a discrete probability density function is built, modelling the probability of each of the $N$ particle pose estimates: 
+$$
+Pdf~function
+$$
+Each particle's pose estimate is then re-sampled from this distribution. 
 
-\section{MATH}
+$$
+Algorithm?
+$$
+\section{Data Set}
+
 
 Before you begin to format your paper, first write and save the content as a separate text file. Keep your text and graphic files separate until after the text has been formatted and styled. Do not use hard tabs, and limit use of hard returns to only one return at the end of a paragraph. Do not add any kind of pagination anywhere in the paper. Do not number text heads-the template will do that for you.
 

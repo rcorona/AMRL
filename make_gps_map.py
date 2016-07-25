@@ -52,7 +52,7 @@ def get_vectors_every_n_meters(gps_msgs, n):
 
     return vectors
 
-def create_map(bag_file_name, map_file_name):
+def create_map(bag_file_name, map_file_name, origin_coordinates_file_name):
     bag = rosbag.Bag(bag_file_name, 'r')
 
     gps_msgs = []
@@ -85,5 +85,12 @@ def create_map(bag_file_name, map_file_name):
 
     map_file.close()
 
+    #Writes gps origin of map to file.
+    origin_file = open(origin_coordinates_file_name, 'w')
+
+    origin_file.write(str(gps_msgs[0].latitude) + ';' + str(gps_msgs[0].longitude))
+
+    origin_file.close()
+
 if __name__ == '__main__':
-    create_map(sys.argv[1], sys.argv[2])
+    create_map(sys.argv[1], sys.argv[2], sys.argv[3])
