@@ -1,2 +1,0 @@
-particle_filter
--DCATKIN_DEVEL_PREFIX=/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/rudy/Desktop/UMASS/CICS/data/catkin_ws/install -G Unix Makefiles
