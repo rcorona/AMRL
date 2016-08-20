@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.28)  26 JUL 2016 00:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  19 AUG 2016 22:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,72 +6,71 @@ entering extended mode
 (./amrl_paper.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 4 languages loaded.
-(/home/rudy/texmf/tex/latex/my_files/ieeeconf.cls
-Document Class: ieeeconf 2016/4/23 revision V1.6b by Pradeep Misra
+(./ieeeconf.cls
+
+LaTeX Warning: You have requested document class `ieeeconf',
+               but the document class provides `cssconf'.
+
+Document Class: cssconf 2004/1/15 revision V1.6b by Pradeep Misra
 \@IEEEtrantmpdimenA=\dimen102
 \@IEEEtrantmpdimenB=\dimen103
 \@IEEEtrantmpcountA=\count79
 \@IEEEtrantmpcountB=\count80
 \@IEEEtrantmptoksA=\toks14
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 794.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 792.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \@IEEEnormalsizefontbaselineskip=\skip41
 
--- This is a 10 point document.
+-- This is a 12 point document.
 \normalsizebaselineskip=\skip42
 \normaljot=\skip43
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1113.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 \IEEEilabelindentA=\dimen104
 \IEEEilabelindentB=\dimen105
@@ -266,11 +265,10 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 49.
+LaTeX Font Info:    Calculating math sizes for size <14> on input line 49.
 
 Underfull \hbox (badness 10000) in paragraph at lines 68--68
-[][][]\OT1/ptm/m/n/8 https://www.clearpathrobotics.com/jackal-small-unmanned-gr
-ound-
+[][][]\OT1/ptm/m/n/9 https://www.clearpathrobotics.com/jackal-small-unmanned-
  []
 
 <jackal.jpg, id=1, 2449.15pt x 1332.98pt>
@@ -278,30 +276,62 @@ File: jackal.jpg Graphic file (type jpg)
  <use jackal.jpg>
 Package pdftex.def Info: jackal.jpg used on input line 72.
 (pdftex.def)             Requested size: 220.41399pt x 119.96301pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \vbox (badness 1348) has occurred while \output is active []
-
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./jackal.jpg>]
-<particle_filter_visual.png, id=17, 316.18124pt x 200.75pt>
+Underfull \hbox (badness 3460) in paragraph at lines 102--103
+[]\OT1/ptm/m/n/12 To ac-com-plish this, the al-go-rithm it-er-ates
+ []
+
+[2] <particle_filter_visual.png, id=22, 316.18124pt x 200.75pt>
 File: particle_filter_visual.png Graphic file (type png)
 
 <use particle_filter_visual.png>
 Package pdftex.def Info: particle_filter_visual.png used on input line 135.
 (pdftex.def)             Requested size: 221.32535pt x 140.52403pt.
- <map.jpg, id=18, 460.63pt x 164.25pt>
+ <map.jpg, id=23, 460.63pt x 164.25pt>
 File: map.jpg Graphic file (type jpg)
 
 <use map.jpg>
 Package pdftex.def Info: map.jpg used on input line 146.
 (pdftex.def)             Requested size: 230.31444pt x 82.12479pt.
- [2 <./particle_filter_visual.png (PNG copy)> <./map.jpg>]
+ <clustering.png, id=24, 462.72874pt x 261.97874pt>
+File: clustering.png Graphic file (type png)
+
+<use clustering.png>
+Package pdftex.def Info: clustering.png used on input line 169.
+(pdftex.def)             Requested size: 231.3638pt x 130.98904pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[3 <./particle_filter_visual.png (PNG copy)> <./map.jpg>]
+<error_pool5.png, id=29, 1156.32pt x 590.4459pt>
+File: error_pool5.png Graphic file (type png)
+ <use error_pool5.png>
+Package pdftex.def Info: error_pool5.png used on input line 201.
+(pdftex.def)             Requested size: 289.07928pt x 147.61111pt.
+
+Overfull \hbox (43.36118pt too wide) in paragraph at lines 201--202
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<heatmap_knn.png, id=30, 2611.356pt x 1862.157pt>
+File: heatmap_knn.png Graphic file (type png)
+ <use heatmap_knn.png>
+Package pdftex.def Info: heatmap_knn.png used on input line 211.
+(pdftex.def)             Requested size: 208.91275pt x 148.9756pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -313,33 +343,32 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[3
-
-] (./amrl_paper.aux) ) 
+[4 <./clustering.png> <./error_pool5.png> <./heatmap_knn.png>]
+(./amrl_paper.aux) ) 
 Here is how much of TeX's memory you used:
- 2702 strings out of 494985
- 39510 string characters out of 6180356
- 104238 words of memory out of 5000000
- 5895 multiletter control sequences out of 15000+600000
- 42234 words of font info for 83 fonts, out of 8000000 for 9000
+ 2725 strings out of 494985
+ 39743 string characters out of 6180356
+ 103273 words of memory out of 5000000
+ 5908 multiletter control sequences out of 15000+600000
+ 43651 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,14n,23p,1086b,285s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.en
-c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
-/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on amrl_paper.pdf (3 pages, 1104391 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
+tmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on amrl_paper.pdf (4 pages, 2944505 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 76 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

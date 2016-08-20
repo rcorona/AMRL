@@ -2,7 +2,7 @@
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
-\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+\documentclass[letterpaper, 12 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
 
 %\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 
@@ -153,6 +153,73 @@ In order to effectively use cameras as sensors, a method that can work directly 
 Through a series of convolution operations on the image data, CNNs are able to extract higher level features from images such as edges and partial objects, features which we believe will prove effective in differentiating pictures taken at different locations from each other. 
 \par
 To this end, a pre-trained model of the AlexNet CNN architecture, which won the 2012 ImageNet Large Scale Visual Recognition Competition (ILSVRC), is used in order to extract higher level features from the images in our data set. Rather than use the entire network for our classification task, these feature vectors are used with a variety of different classification algorithms (e.g K-Nearest Neighbors, SVNs, etc.) in order to determine an effective model for localization.  
+
+
+\section{Results}
+
+\subsection{Particle Filter}
+
+\subsection{Visual Classification}
+
+Because classification algorithms operate on a discrete set of possible values, it is necessary to discretize the continuous space of GPS readings for our task. In order to do this, K-Means clustering was used on our training data in order to generate 100 clusters along our map, which served as the set of possible classes which images could be labeled with. 
+\par 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{clustering}
+\caption{A visualization of the classes generated on our dataset through K-Means clustering using cartesian coordinates in meters. Each colored patch denotes a different class, the average distance of GPS points in our data set to the nearest cluster center was 5.53 meters.}
+\label{clustering}
+\end{figure}
+
+For a preliminary evaluation of our methods, a K-Nearest Neighbor classifier was trained using 18 runs from our data set, and the 19th was used for testing. For evaluation, feature vectors were extracted for our test set from a variety of layers of the AlexNet CNN, which were then run through the classifier. The classification accuracy of this experiment performed for each layer may be seen in figure \ref{classification_results}. From these results, it was determined that the fifth pooling should be used.  
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{| c | c |}
+\hline
+\textbf{Layer} & \textbf{Accuracy} \\
+\hline
+Fully Connected 7 & 0.31 \\ 
+Fully Connected 6 & 0.38 \\
+Pooling 5 & 0.42 \\
+Convolutional 4 & 0.41 \\
+Convolutional 3 & 0.35 \\
+Pooling 2 & 0.41 \\
+Pooling 1 & 0.37 \\
+\hline
+\end{tabular}
+\caption{The accuracy of the K-Nearest Neighbor classification on feature vectors pulled from a variety of layers of the AlexNet CNN. }
+\label{classification_results}
+\end{figure} 
+
+\subsection{Error Analysis}
+
+Given the low accuracy of our classification results, error analysis was conducted in order to determine the possible sources of error. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{error_pool5}
+\caption{Visualizations of error from the fifth pooling layer. \textit{Top Left)} \textit{Top Right)} \textit{Bottom Left)} \textit{Bottom Right)}}
+\label{error_graphs}
+\end{figure}
+
+Figure \ref{error_graphs} shows the results from some error analysis that was conducted. In general, it was found that the majority of misclassified images had been labeled with a class that was within 10 meters from the correct class, which suggests that the model was able to learn general locations relatively effectively. It may be seen that there were only certain areas with much higher error. 
+\par
+In order to get a clearer idea of which parts of the map the model failed in, a confusion matrix was constructed
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.08]{heatmap_knn}
+\caption{Visualizations of error from the fifth pooling layer. \textit{Top Left)} \textit{Top Right)} \textit{Bottom Left)} \textit{Bottom Right)}}
+\label{confusion_matrix}
+\end{figure}
+which visualized the correlation between the assigned and true labels for the images. Looking at the result of this analysis in figure \ref{confusion_matrix}, it may be seen that the model performed well throughout most of the map, only faltering at either end, with the error being particularly pronounced at the bottom right of the matrix. By once more looking back at the clusters in figure \ref{clustering}, it may be observed that the clusters are very consistent throughout the middle of the track, and diverge much more at the ends, particularly at the bottom right end of the map. 
+
+\section{Discussion and Future Work}
+
+Because the same path was followed each time data was collected on our map, it is clear that the divergence in clustering classes is due to GPS error. This variance in classes in parts of our map proved to cause too adverse and effect on our results. Because of this inconsistency found within the GPS, it was determined that a different method of collecting ground-truth locations for images is necessary. 
+
+\section{conclusion}
+
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
