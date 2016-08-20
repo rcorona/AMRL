@@ -30,12 +30,14 @@ Particle Filter for Skid-Steered Robot
 }
 
 
-\author{Rodolfo Corona%$^{1}$ 
-$~$and Joydeep Biswas%$^{2}$% <-this % stops a space
-%\thanks{*This work was not supported by any organization}% <-this % stops a space
-%\thanks{$^{1}$Albert Author is with Faculty of Electrical Engineering, Mathematics and Computer Science,
-%        University of Twente, 7500 AE Enschede, The Netherlands
-%        {\tt\small albert.author@papercept.net}}%
+\author{Rodolfo Corona$^{1}$ 
+$~$ Chenyun Wu$^{2}$ $~$ Samer Nashed$^{3}$ $~$ Joydeep Biswas$^{4}$ %<-this % stops a space
+% <-this % stops a space
+\thanks{$^{1}$Rodolfo Corona is an undergraduate student at UT Austin who worked on this project as an REU student at UMass Amherst, he is responsible for the localization components of this project.}
+\thanks{$^{2}$Chenyun Wu is a graduate student at UMass Amherst working under Dr. Subhransu Maji and conducted the vision related work for this project.}
+\thanks{$^{3}$Samer Nashed is a graduate student at UMass Amherst working under Dr. Joydeep Biswas and served as Rodolfo Corona's graduate mentor for the project.}
+\thanks{$^{4}$Joydeep Biswas is an Assistant Professor in the College of Information and Computer Sciences at UMass Amherst and served as Rodolfo Corona's faculty advisor for this project.} 
+\thanks{*This work was supported in part by the NSF.}
 %\thanks{$^{2}$Bernard D. Researcheris with the Department of Electrical Engineering, Wright State University,
 %        Dayton, OH 45435, USA
 %        {\tt\small b.d.researcher@ieee.org}}%
@@ -118,11 +120,7 @@ At each time step $t$ the robot's motion model is used in conjunction with the c
 \end{align*}
 Where $\epsilon$ represents an error reading sampled from an experimentally approximated distribution for each of the three dimensions. 
 \subsubsection{Weigh}
-Immediately after receiving a pose estimate, each particle is assigned a weight based on the current sensor model reading $z_t$. In order to effectively use GPS for localization, the latitudinal and longitudinal variances, $\sigma _{lon}^2$ and $\sigma _{lat}^2$, for the Jackal's GPS were approximated experimentally by collecting readings from a set of three marked places five different times. Using these values, the following loss function was constructed:
-$$
-f(x_e,y_e,x_g,y_g)= \frac{1}{\sigma _{long}^2 + e^{|x_e-x_g|}}\cdot \frac{1}{\sigma _{lat}^2 + e^{|y_e-y_g|}}
-$$
-Where $x_e$ and $y_e$ are position estimates and $g_x$ and $g_y$ are GPS position readings. This function is then used in order to assign a weight to each particle, where a greater distance from the GPS reading results in a lower weight being assigned. 
+Immediately after receiving a pose estimate, each particle is assigned a weight based on the current sensor model reading $z_t$.  
 \subsubsection{Resample} 
 Using each of the $N$ particles' weight, a discrete probability density function of pose estimates is built such that the probability of any particle's pose estimate is proportional to its weight: 
 $$
@@ -130,21 +128,34 @@ $$
 $$
 Where $\textbf{x}^i$ and $w_i$ denote the $i$-th particle's pose estimate and weight. Each particle's pose estimate is then re-sampled using this distribution, which results in the particle distribution being concentrated around the most likely robot locations.  
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.70]{particle_filter_visual}
-\caption{A visualization of the particle filter using GPS. The blue path denotes the set of all GPS readings while the yellow path denotes the readings already given to the robot. The red dots represent the particle distribution and the green line, stemming from the particle cloud, represents the robot's pose.}
-\end{figure}
+\section{Related Work}
 
 \section{Methodology}
 
 \subsection{Data Set}
-A roughly 280 meter path was chosen for use as a map for testing our particle filter. This path was traversed a total of 19 times at different times of day in order to capture as much variability in daylight as possible. Through each run, data from all robot sensors was collected (e.g. GPS, cameras, etc.).  
+A roughly 280 meter path was chosen for use as a map for testing our particle filter. This path was traversed a total of 19 times at different times of day in order to capture as much variability in daylight as possible. Through each run, data from all robot sensors was collected (e.g. GPS, cameras, wheel odometry, etc.).  
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{map}
 \caption{A satellite image of the map used in our data set. The red map shows the path traversed by the robot during data collection.}
+\end{figure}
+
+\subsection{Particle Filter Algorithm and Visualizer}
+For our particle filter implementation, internal wheel odometry sensors were used to approximate trajectory in our motion model. Additionally, a GPS perceptual model was integrated in order to test the efficacy of the algorithm while the visual perceptual model was being developed. 
+\par
+In order to effectively use GPS for localization, the latitudinal and longitudinal variances, $\sigma _{lon}^2$ and $\sigma _{lat}^2$, for the Jackal's GPS were approximated experimentally by collecting readings from a set of three marked places five different times. Using these values, the following loss function was constructed:
+$$
+f(x_e,y_e,x_g,y_g)= \frac{1}{\sigma _{long}^2 + e^{|x_e-x_g|}}\cdot \frac{1}{\sigma _{lat}^2 + e^{|y_e-y_g|}}
+$$
+Where $x_e$ and $y_e$ are position estimates and $g_x$ and $g_y$ are GPS position readings. This function was then used in order to assign a weight to each particle in the weighing step of the algorithm, where a greater distance from the GPS reading results in a lower weight being assigned.
+\par
+In order to be able to qualitatively evaluate the particle filter implementation, the CMU Cobot \cite{cobot} localization visualizer was integrated into the system. Using the Cobot visualization library, the particle filter visualizer may take a log of saved sensor data from our data set and recreate it visually, effectively allowing the user to replay a run along the map. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.70]{particle_filter_visual}
+\caption{A visualization of the particle filter using GPS. The blue path denotes the set of all GPS readings while the yellow path denotes the readings already given to the robot. The red dots represent the particle distribution and the green line, stemming from the particle cloud, represents the robot's pose.}
 \end{figure}
 
 \subsection{Neural Perceptual Model}
@@ -158,6 +169,26 @@ To this end, a pre-trained model of the AlexNet CNN architecture, which won the 
 \section{Results}
 
 \subsection{Particle Filter}
+
+After completion, the particle filter implementation was evaluated qualitatively in a variety of settings in order to ensure that it behaved as would be expected in a variety of conditions. 
+\par
+As a sanity check, the filter was first tested on synthetic odometry data which gave readings denoting only forward movement on the x-axis. One such run with only odometry readings may be seen in figure \ref{odometry_error}, as would be expected, the error models developed for the Jackal result in some uncertainty in trajectory at each time step, which is reflected by the distribution of particles. Without any correction from other senors, the distribution can be seen to quickly diverge, denoting an ever growing level of uncertainty of the robot's true pose. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.60]{NO_GPS}
+\caption{A visualization of the particle filter using only wheel odometry with synthetic data denoting forward movement. As may be seen, without any correction from a perceptual model, the uncertainty of the model grows quickly over time. }
+\label{odometry_error}
+\end{figure}
+
+Following this, synthetic GPS data was added to this evaluation by giving a GPS reading with coordinates matching the true location of the robot in the data at each time step. As may be seen in figure \ref{with_gps}, the uncertainty of the run is greatly mitigated, with the distribution of particles clearly remaining within the GPS roughly 10 meter radius of uncertainty. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.60]{With_GPS}
+\caption{A visualization of the particle filter using wheel odometry and GPS with synthetic data denoting forward movement. It may be observed that the distribution of particles is maintained within the GPS radius of uncertainty. }
+\label{with_gps}
+\end{figure}
 
 \subsection{Visual Classification}
 
@@ -217,9 +248,14 @@ which visualized the correlation between the assigned and true labels for the im
 \section{Discussion and Future Work}
 
 Because the same path was followed each time data was collected on our map, it is clear that the divergence in clustering classes is due to GPS error. This variance in classes in parts of our map proved to cause too adverse and effect on our results. Because of this inconsistency found within the GPS, it was determined that a different method of collecting ground-truth locations for images is necessary. 
+\par
+Another factor that proved too problematic in the methodology was the data collection step. Because neural networks need large amounts of data to train, images were collected from many runs, a process which took approximately a week for a 280 meter path. Because a long-term goal of the project is to be able to create a map of the entire campus, this method of collecting data would prove to be too time consuming, necessitating different methods. 
+\par
+For the reasons deleniated above, it was determined that a first alternative to explore would be the use of satellite imagery. We would like to explore methods of finding the correspondence between imaegs taken from the ground and images taken over satellite. Because GPS coordinates of satellite imagery may be easily determined, we believe that finding a time-effective method of mapping ground images to their respective patch of a satellite image would prove fruitful for our goals. 
 
 \section{conclusion}
 
+A particle filter was implemented for use with the Jackal robot's GPS and internal wheel odometry sensors. Furtheremore, the filter was integrated with visualization software which allowed for a qualitative analysis of the algorithm. Preliminary methods for developing a visual perceptual model using CNNs was explored, and some problems were found with the initial methodology. For future work, we plan on aleviating these problems in order to have a robust visual perceptual model which will allow for outdoor localization around campus. 
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens

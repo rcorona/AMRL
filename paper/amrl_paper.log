@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  19 AUG 2016 22:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  20 AUG 2016 16:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -191,18 +191,18 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 (./amrl_paper.aux)
 \openout1 = `amrl_paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -265,73 +265,83 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Calculating math sizes for size <14> on input line 49.
+LaTeX Font Info:    Calculating math sizes for size <14> on input line 51.
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--68
+Underfull \hbox (badness 10000) in paragraph at lines 70--70
 [][][]\OT1/ptm/m/n/9 https://www.clearpathrobotics.com/jackal-small-unmanned-
  []
 
 <jackal.jpg, id=1, 2449.15pt x 1332.98pt>
 File: jackal.jpg Graphic file (type jpg)
  <use jackal.jpg>
-Package pdftex.def Info: jackal.jpg used on input line 72.
+Package pdftex.def Info: jackal.jpg used on input line 74.
 (pdftex.def)             Requested size: 220.41399pt x 119.96301pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./jackal.jpg>]
-Underfull \hbox (badness 3460) in paragraph at lines 102--103
+Underfull \hbox (badness 3460) in paragraph at lines 104--105
 []\OT1/ptm/m/n/12 To ac-com-plish this, the al-go-rithm it-er-ates
  []
 
-[2] <particle_filter_visual.png, id=22, 316.18124pt x 200.75pt>
+[2] <map.jpg, id=23, 460.63pt x 164.25pt>
+File: map.jpg Graphic file (type jpg)
+ <use map.jpg>
+Package pdftex.def Info: map.jpg used on input line 140.
+(pdftex.def)             Requested size: 230.31444pt x 82.12479pt.
+
+
+LaTeX Warning: Citation `cobot' on page 3 undefined on input line 153.
+
+<particle_filter_visual.png, id=24, 316.18124pt x 200.75pt>
 File: particle_filter_visual.png Graphic file (type png)
 
 <use particle_filter_visual.png>
-Package pdftex.def Info: particle_filter_visual.png used on input line 135.
+Package pdftex.def Info: particle_filter_visual.png used on input line 157.
 (pdftex.def)             Requested size: 221.32535pt x 140.52403pt.
- <map.jpg, id=23, 460.63pt x 164.25pt>
-File: map.jpg Graphic file (type jpg)
+ [3 <./map.jpg> <./particle_filter_visual.png (PNG copy)>] <NO_GPS.png, id=29, 
+401.5pt x 301.125pt>
+File: NO_GPS.png Graphic file (type png)
+ <use NO_GPS.png>
+Package pdftex.def Info: NO_GPS.png used on input line 179.
+(pdftex.def)             Requested size: 240.90184pt x 180.67638pt.
 
-<use map.jpg>
-Package pdftex.def Info: map.jpg used on input line 146.
-(pdftex.def)             Requested size: 230.31444pt x 82.12479pt.
- <clustering.png, id=24, 462.72874pt x 261.97874pt>
+<With_GPS.png, id=31, 401.5pt x 301.125pt>
+File: With_GPS.png Graphic file (type png)
+ <use With_GPS.png>
+Package pdftex.def Info: With_GPS.png used on input line 188.
+(pdftex.def)             Requested size: 240.90184pt x 180.67638pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<clustering.png, id=32, 462.72874pt x 261.97874pt>
 File: clustering.png Graphic file (type png)
-
-<use clustering.png>
-Package pdftex.def Info: clustering.png used on input line 169.
+ <use clustering.png>
+Package pdftex.def Info: clustering.png used on input line 200.
 (pdftex.def)             Requested size: 231.3638pt x 130.98904pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[3 <./particle_filter_visual.png (PNG copy)> <./map.jpg>]
-<error_pool5.png, id=29, 1156.32pt x 590.4459pt>
+[4 <./NO_GPS.png> <./With_GPS.png> <./clustering.png>]
+<error_pool5.png, id=39, 1156.32pt x 590.4459pt>
 File: error_pool5.png Graphic file (type png)
  <use error_pool5.png>
-Package pdftex.def Info: error_pool5.png used on input line 201.
+Package pdftex.def Info: error_pool5.png used on input line 232.
 (pdftex.def)             Requested size: 289.07928pt x 147.61111pt.
 
-Overfull \hbox (43.36118pt too wide) in paragraph at lines 201--202
+Overfull \hbox (43.36118pt too wide) in paragraph at lines 232--233
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<heatmap_knn.png, id=30, 2611.356pt x 1862.157pt>
+<heatmap_knn.png, id=40, 2611.356pt x 1862.157pt>
 File: heatmap_knn.png Graphic file (type png)
  <use heatmap_knn.png>
-Package pdftex.def Info: heatmap_knn.png used on input line 211.
+Package pdftex.def Info: heatmap_knn.png used on input line 242.
 (pdftex.def)             Requested size: 208.91275pt x 148.9756pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[5 <./error_pool5.png> <./heatmap_knn.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -343,32 +353,39 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[4 <./clustering.png> <./error_pool5.png> <./heatmap_knn.png>]
-(./amrl_paper.aux) ) 
+[6
+
+] (./amrl_paper.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2725 strings out of 494985
- 39743 string characters out of 6180356
- 103273 words of memory out of 5000000
- 5908 multiletter control sequences out of 15000+600000
+ 2738 strings out of 494985
+ 39924 string characters out of 6180356
+ 104077 words of memory out of 5000000
+ 5919 multiletter control sequences out of 15000+600000
  43651 words of font info for 86 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,14n,23p,1086b,285s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
-tmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on amrl_paper.pdf (4 pages, 2944505 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
+/utmri8a.pfb>
+Output written on amrl_paper.pdf (6 pages, 3122708 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

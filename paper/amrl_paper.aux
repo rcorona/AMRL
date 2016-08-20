@@ -7,22 +7,29 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {II-B.1}Elapse Time}{2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {II-B.2}Weigh}{2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {II-B.3}Resample}{2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A visualization of the particle filter using GPS. The blue path denotes the set of all GPS readings while the yellow path denotes the readings already given to the robot. The red dots represent the particle distribution and the green line, stemming from the particle cloud, represents the robot's pose.}}{3}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Methodology}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-A}Data Set}{3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A satellite image of the map used in our data set. The red map shows the path traversed by the robot during data collection.}}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {III-B}Neural Perceptual Model}{3}}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Results}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Particle Filter}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Visual Classification}{3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A visualization of the classes generated on our dataset through K-Means clustering using cartesian coordinates in meters. Each colored patch denotes a different class, the average distance of GPS points in our data set to the nearest cluster center was 5.53 meters.}}{4}}
-\newlabel{clustering}{{4}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The accuracy of the K-Nearest Neighbor classification on feature vectors pulled from a variety of layers of the AlexNet CNN. }}{4}}
-\newlabel{classification_results}{{5}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Error Analysis}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Visualizations of error from the fifth pooling layer. \textit  {Top Left)} \textit  {Top Right)} \textit  {Bottom Left)} \textit  {Bottom Right)}}}{4}}
-\newlabel{error_graphs}{{6}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Visualizations of error from the fifth pooling layer. \textit  {Top Left)} \textit  {Top Right)} \textit  {Bottom Left)} \textit  {Bottom Right)}}}{4}}
-\newlabel{confusion_matrix}{{7}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion and Future Work}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}conclusion}{4}}
+\citation{cobot}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Related Work}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Methodology}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-A}Data Set}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A satellite image of the map used in our data set. The red map shows the path traversed by the robot during data collection.}}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-B}Particle Filter Algorithm and Visualizer}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A visualization of the particle filter using GPS. The blue path denotes the set of all GPS readings while the yellow path denotes the readings already given to the robot. The red dots represent the particle distribution and the green line, stemming from the particle cloud, represents the robot's pose.}}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {IV-C}Neural Perceptual Model}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Results}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-A}Particle Filter}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A visualization of the particle filter using only wheel odometry with synthetic data denoting forward movement. As may be seen, without any correction from a perceptual model, the uncertainty of the model grows quickly over time. }}{4}}
+\newlabel{odometry_error}{{4}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces A visualization of the particle filter using wheel odometry and GPS with synthetic data denoting forward movement. It may be observed that the distribution of particles is maintained within the GPS radius of uncertainty. }}{4}}
+\newlabel{with_gps}{{5}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-B}Visual Classification}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces A visualization of the classes generated on our dataset through K-Means clustering using cartesian coordinates in meters. Each colored patch denotes a different class, the average distance of GPS points in our data set to the nearest cluster center was 5.53 meters.}}{4}}
+\newlabel{clustering}{{6}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The accuracy of the K-Nearest Neighbor classification on feature vectors pulled from a variety of layers of the AlexNet CNN. }}{5}}
+\newlabel{classification_results}{{7}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V-C}Error Analysis}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Visualizations of error from the fifth pooling layer. \textit  {Top Left)} \textit  {Top Right)} \textit  {Bottom Left)} \textit  {Bottom Right)}}}{5}}
+\newlabel{error_graphs}{{8}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Visualizations of error from the fifth pooling layer. \textit  {Top Left)} \textit  {Top Right)} \textit  {Bottom Left)} \textit  {Bottom Right)}}}{5}}
+\newlabel{confusion_matrix}{{9}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion and Future Work}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}conclusion}{6}}
