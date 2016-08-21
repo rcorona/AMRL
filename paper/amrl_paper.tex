@@ -23,7 +23,7 @@
 %\usepackage{amssymb}  % assumes amsmath package installed
 
 \usepackage{graphicx}
-
+\usepackage{cite}
 
 \title{\LARGE \bf
 Particle Filter for Skid-Steered Robot
@@ -63,15 +63,15 @@ The ability to determine the location of a robot in its environment is a key req
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-For an autonomous robot to operate effectively in its environment, it is necessary that it be able to track its location over time. More formally, \textbf{localization} may be defined as the task of determining a robot's \textbf{pose}, which is of the form $(x~y~\theta)^T$ and denotes a robots location and orientation within a given map $M$. Although, simple to define, this task is made difficult by the inherently noisy nature of sensors. Even if a particular sensor's error is small, the dependence of each reading on the previous ones can quickly give rise to large systematic errors.  
+For an autonomous robot to operate effectively in its environment, it is necessary that it be able to track its location over time. More formally, \textbf{localization} may be defined as the task of determining a robot's \textbf{pose}, which is of the form $(x~y~\theta)^T$ and denotes a robots location and orientation within a given map $M$. Although simple to define, this task is made difficult by the inherently noisy nature of sensors. Even if a particular sensor's error is small, the dependence of each reading on the previous ones can quickly give rise to large systematic errors.  
 \par
 In order to combat this problem, localization algorithms often require and are greatly aided by the use of multiple sensors. By getting location estimates from a variety of sources, a tighter probability distribution for a robot's pose may be computed, allowing the error and uncertainty in pose estimates to be mitigated. 
 \par
-In this paper we detail the implementation of a \textbf{particle filter}, a popular localization algorithm, for use with the Jackal, a skid-steered, outdoor robot developed by ClearPath Robotics\footnote{https://www.clearpathrobotics.com/jackal-small-unmanned-ground-vehicle/}. To this end, we derive a motion model for the robot and employ the use of GPS sensors as well as its internal odometry for our implementation.
+In this paper we detail the implementation of a \textbf{particle filter}, a popular localization algorithm, for use with the Jackal, a skid-steered, outdoor robot developed by ClearPath Robotics\footnote{https://www.clearpathrobotics.com/jackal-small-unmanned-ground-vehicle/}. Furthermore, we derive a motion model for the robot and employ the use of GPS sensors as well as its internal odometry for our implementation.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.09]{jackal}
+\includegraphics[scale=0.07]{JackalPose}
 \caption{The ClearPath Jackal equipped with two fish-eye camera lenses.}
 \end{figure}
 
@@ -80,7 +80,7 @@ This work also explores how cameras may be used as sensors for localization. In 
 
 \section{Background}
 \subsection{Localization}
-The task of any localization algorithm is to determine a likely estimate for a robot's current pose $(x~y~\theta)^T$. In order to accomplish this, the algorithm must work effectively with readings from its ensemble of sensors. 
+The task of any localization algorithm is to determine a likely estimate for a robot's current pose $(x~y~\theta)^T$. In order to accomplish this, the algorithm must work effectively with readings from its ensemble of sensors \cite{thrun2002robotic}. 
 \par
 At each time step $t$, a robot receives a \textbf{control} $u_t$, and a \textbf{sensor reading} $z_t$. The control is an estimate of the robot's translation and rotation since the last time step as given by its internal sensors, such as odometry and IMU (inertial measurement unit), and is of the form $(\Delta x~\Delta y~\Delta \theta)^T$. Similarly, the sensor readings come from sensors external to the robot, such as GPS or laser range finders, and give a pose estimate of the form $(x_z~y_z~\theta _z)^T$. 
 \par 
@@ -128,7 +128,71 @@ $$
 $$
 Where $\textbf{x}^i$ and $w_i$ denote the $i$-th particle's pose estimate and weight. Each particle's pose estimate is then re-sampled using this distribution, which results in the particle distribution being concentrated around the most likely robot locations.  
 
+\subsection{Convolutional Neural Networks}
+
+A neural network (NN) is a model used for machine learning which represents a funciton $f:X\to Y$ of datum to labels. Generally, these models are used in order to classify data in tasks such as object recognition in images. 
+\par
+In order to do this, a network takes a vector or tensor representation of data \textbf{x} as input (such as $W\times H \times 3$ matrix for an image of dimensions $W\times H$ and RGB color channels) and performs a set of transformations on it to generate its output. Each \textbf{layer} of a network consists of a set of \textbf{neurons}, with neurons at different layers connected to each other. Every neuron is assigned a weight vector, the weights of which must be learned using machine learning techniques, with each weight corresponding to each of its inputs from the previous layer.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.43]{neural_net}
+\caption{A fully connected, feed-forward neural network. Neurons are connected to each neuron in the previous and next layers. Image source: http://neuralnetworksanddeeplearning.com/chap6.html}
+\end{figure}
+
+At each layer, a neuron will compute the dot product between its input vector and its weight vector, the result of which is then fed to the neurons at the next layer to which it is connected to. In more concrete terms, the model performs a matrix multiplication at each layer in order to derive its output. This basic neural network model is known as a \textbf{feed forward} architecture and is also generally implemented as a \textbf{fully connected} model in which the neurons in each layer will be connected to all of the neurons in the next. 
+\par
+It may be observed that as the size of images grows, the number of weights that must be learned in a network can quickly become intractable. Due to the growth in learned parameters, the amount of training data required may also become infeasible. Furtheremore, at least in the case of images, much of the inputted information is redundant and need not all be processed for effective classification. Convolutional neural networks alleviate this problem by employing the use of \textbf{convlutional} and \textbf{pooling} layers in their architecture.
+\par
+Instead of taking as input the entirity of an image, neurons in a convolutional layer will instead receive small patches, such as $3\times 3$ patches, and convolve the values in each pixel using a \textbf{kernel function}. A kernel function used within a neuron is known as a \textbf{filter} because each kernel function is constructed to reflect the presence of different types of features in a patch, such as edges, corners, or colors. In other words, neurons in a convolutional layer will output higher values, or become "activated", when they detect the presence of certain features. 
+\par
+Neurons in a pooling layer will take input from neurons in convolutional layers and perform some form of downsampling on their input, which reduces the dimensionality of its output which results in a lower number of weights going forward. Similarly to the convolutional layers, neurons in this layer will be activated by the presence of certain features in the input, but are invariant to the order of the input. 
+\par
+Finally, the fully connected layers of a CNN work identically to those of a fully connected network, and are generally used as the last layers in order to compute a final classification for the given input. 
+\par
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.15]{cnn}
+\caption{A convolutional neural network. The number of learned parameters is greatly reduced compared to fully connected architectures through the use of convolutional and pooling layers. Image source: http://colah.github.io/posts/2014-07-Conv-Nets-Modular/}
+\end{figure}
+
+At a high level, the network may be thought of as finding certain features in specific patches in the convolutional layers. The pooling layers may be thought of as seeking out only the presence of these features among groups of patches, indifferent to which patch. As the input travels through the network, the types of features which are computed also become more abstract, taking the form of fuller patterns or even representing partial objects themselves. 
+\par
+Although a lower level description of CNNs is beyond the scope of this work, a more in depth treatment of the subject matter may be found at \cite{deeplearningbook, AlexNet}. 
+ 
+
 \section{Related Work}
+
+There has been much work done on indoor robot localization. In indoor localization environments, the evnironment remains mostly static and does not vary in factors such as weather, lighting, and obstacle locations. The presence of walls also makes it much easier to use sensors such as laser-range finders. 
+\par
+Outdoor localization, however, is complicated by many factors which can vary greatly based on time of day and season, amongst other things. Irie et al. propose a solution to this problem which uses stereo cameras in order to generate 2D point clouds of the environment \cite{irie2010mobile}. This method is used during data collection to create a global grid map of the robots environment. During localization, these point clouds are used in two ways. Firstly, the motion of the robot is estimated at each timestep using the changes in point clouds, something which serves as the motion model for their particle filter implementation. As a perceptual model, they try to evaluate the local point cloud  to the global map that was generated during data collection. They claim that their methods are more resilient to changes in lighting than other approaches.
+\par
+Similarly to Irie et al., Agrawal et al. use the Harris corner detection method \cite{Harris} along with stereo cameras in order to calculate movement between timesteps to serve as a motion model \cite{agrawal2006real}. Instead of using vision as a perceptual model, however, they use GPS sensors. Additionally, they implement a Kalman Filter for localization \cite{Kalman}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{Stereo}
+\caption{A picture of the robot used in the work of Agrawal et al., which employs stereo cameras with GPS for localization. Image source: http://www.ai.sri.com/~agrawal/icpr06.pdf}
+\end{figure}
+
+
+\par
+In our work, we propose to use neural networks to serve the role of a perceptual model. With enough training data, we believe that neural networks would be able to learn the invariant features of a map, which would allow them to be robust to different lighting and wheather conditions like point cloud methods as well as robust to variance in the set of objects in the environment like SIFT and SURF feature vectors. Furtheremore, CNNs do not require one to perform any feature engineering on the data, which not only cuts down development time, but may also make our methods robust to different environments which may have very different types of differentiating features. 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{point_clouds}
+\caption{Point clouds generated by Irie et al. on their data set for localization using stereo cameras. Image source: $http://www.furo.org/irie/stereo_localization_iros10.pdf$}
+\end{figure}
+
+Valgren et al. instead propose to use SIFT and SURF features for image matching \cite{valgren2007sift}. In their work, they generate SIFT \cite{sift} and SURF\cite{surf} feature vectors for the images collected by their robot and use nearest neighbor approaches to match them to images in their training data. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.15]{sift}
+\caption{An example of SIFT features generated for an image. Both SIFT and SURF generate feature vectors for images by finding key points such as edges, corners, or other areas where certain image gradients are higher. Image source: http://cs.brown.edu/courses/cs143/results/proj2/valayshah/}
+\end{figure}
+
 
 \section{Methodology}
 
@@ -138,7 +202,7 @@ A roughly 280 meter path was chosen for use as a map for testing our particle fi
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{map}
-\caption{A satellite image of the map used in our data set. The red map shows the path traversed by the robot during data collection.}
+\caption{A satellite image of the map used in our data set. The red map shows the path traversed by the robot during data collection. Image source: https://www.google.com/maps}
 \end{figure}
 
 \subsection{Particle Filter Algorithm and Visualizer}
@@ -163,7 +227,14 @@ In order to effectively use cameras as sensors, a method that can work directly 
 \par
 Through a series of convolution operations on the image data, CNNs are able to extract higher level features from images such as edges and partial objects, features which we believe will prove effective in differentiating pictures taken at different locations from each other. 
 \par
-To this end, a pre-trained model of the AlexNet CNN architecture, which won the 2012 ImageNet Large Scale Visual Recognition Competition (ILSVRC), is used in order to extract higher level features from the images in our data set. Rather than use the entire network for our classification task, these feature vectors are used with a variety of different classification algorithms (e.g K-Nearest Neighbors, SVNs, etc.) in order to determine an effective model for localization.  
+To this end, a pre-trained model of the AlexNet CNN architecture \cite{AlexNet}, which won the 2012 ImageNet Large Scale Visual Recognition Competition (ILSVRC), is used in order to extract higher level features from the images in our data set. Rather than use the entire network for our classification task, these feature vectors are used with a variety of different classification algorithms (e.g K-Nearest Neighbors, SVNs, etc.) in order to determine an effective model for localization.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.70]{alexnet}
+\caption{The AlexNet CNN architecture. At each layer features are extracted, starting from lower level features such as edges and colors, growing in abstraction to feature types such as partial objects. Image source: http://www.cc.gatech.edu/~hays/compvision/proj6/}
+\end{figure}
+
 
 
 \section{Results}
@@ -221,7 +292,7 @@ Pooling 1 & 0.37 \\
 \end{tabular}
 \caption{The accuracy of the K-Nearest Neighbor classification on feature vectors pulled from a variety of layers of the AlexNet CNN. }
 \label{classification_results}
-\end{figure} 
+\end{figure}
 
 \subsection{Error Analysis}
 
@@ -230,7 +301,7 @@ Given the low accuracy of our classification results, error analysis was conduct
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.25]{error_pool5}
-\caption{Visualizations of error from the fifth pooling layer. \textit{Top Left)} \textit{Top Right)} \textit{Bottom Left)} \textit{Bottom Right)}}
+\caption{Visualizations of error from the fifth pooling layer. \textit{Top Left)} The continuous multi-colored path represents the ground truth path taken in the test run. The location of colored dots represent the location they were classified under, while the color corresponds to the true classification on the path.  \textit{Top Right)} The distance between labels assigned to images and the location of their true label. This graphic shows that the majority of error was kept within a 10 meter radius. \textit{Bottom Left)} Another measure of error between assigned labels and their true class. From this it may be inferred that the greatest error occurred towards the beginning of the run and at the end. \textit{Bottom Right)} The same measure as the bottom left, sorted by error magnitude. Like the top right, this graphic implies that the majority of error was kept within a 10 meter distance.}
 \label{error_graphs}
 \end{figure}
 
@@ -256,6 +327,9 @@ For the reasons deleniated above, it was determined that a first alternative to 
 \section{conclusion}
 
 A particle filter was implemented for use with the Jackal robot's GPS and internal wheel odometry sensors. Furtheremore, the filter was integrated with visualization software which allowed for a qualitative analysis of the algorithm. Preliminary methods for developing a visual perceptual model using CNNs was explored, and some problems were found with the initial methodology. For future work, we plan on aleviating these problems in order to have a robust visual perceptual model which will allow for outdoor localization around campus. 
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
 \addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens

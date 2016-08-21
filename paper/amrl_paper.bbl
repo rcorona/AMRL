@@ -1,0 +1,71 @@
+\begin{thebibliography}{10}
+
+\bibitem{agrawal2006real}
+Motilal Agrawal and Kurt Konolige.
+\newblock Real-time localization in outdoor environments using stereo vision
+  and inexpensive gps.
+\newblock In {\em 18th International Conference on Pattern Recognition
+  (ICPR'06)}, volume~3, pages 1063--1068. IEEE, 2006.
+
+\bibitem{surf}
+Herbert Bay, Tinne Tuytelaars, and Luc Van~Gool.
+\newblock Surf: Speeded up robust features.
+\newblock In {\em European conference on computer vision}, pages 404--417.
+  Springer, 2006.
+
+\bibitem{deeplearningbook}
+Ian Goodfellow~Yoshua Bengio and Aaron Courville.
+\newblock Deep learning.
+\newblock Book in preparation for MIT Press, 2016.
+
+\bibitem{Harris}
+Chris Harris and Mike Stephens.
+\newblock A combined corner and edge detector.
+\newblock In {\em In Proc. of Fourth Alvey Vision Conference}, pages 147--151,
+  1988.
+
+\bibitem{irie2010mobile}
+Kiyoshi Irie, Tomoaki Yoshida, and Masahiro Tomono.
+\newblock Mobile robot localization using stereo vision in outdoor environments
+  under various illumination conditions.
+\newblock In {\em Intelligent Robots and Systems (IROS), 2010 IEEE/RSJ
+  International Conference on}, pages 5175--5181. IEEE, 2010.
+
+\bibitem{Kalman}
+Rudolph~Emil Kalman.
+\newblock A new approach to linear filtering and prediction problems.
+\newblock {\em Transactions of the ASME--Journal of Basic Engineering},
+  82(Series D):35--45, 1960.
+
+\bibitem{AlexNet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E. Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In F.~Pereira, C.~J.~C. Burges, L.~Bottou, and K.~Q. Weinberger,
+  editors, {\em Advances in Neural Information Processing Systems 25}, pages
+  1097--1105. Curran Associates, Inc., 2012.
+
+\bibitem{sift}
+David~G Lowe.
+\newblock Distinctive image features from scale-invariant keypoints.
+\newblock {\em International journal of computer vision}, 60(2):91--110, 2004.
+
+\bibitem{thrun2002robotic}
+Sebastian Thrun et~al.
+\newblock Robotic mapping: A survey.
+\newblock {\em Exploring artificial intelligence in the new millennium},
+  1:1--35, 2002.
+
+\bibitem{valgren2007sift}
+Christoffer Valgren and Achim~J Lilienthal.
+\newblock Sift, surf and seasons: Long-term outdoor localization using local
+  features.
+\newblock In {\em EMCR}, 2007.
+
+\bibitem{cobot}
+Manuela Veloso, Joydeep Biswas, Brian Coltin, Stephanie Rosenthal, Tom Kollar,
+  Cetin Mericli, Mehdi Samadi, Susana Brandao, and Rodrigo Ventura.
+\newblock Cobots: Collaborative robots servicing multi-floor buildings.
+\newblock In {\em 2012 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 5446--5447. IEEE, 2012.
+
+\end{thebibliography}
