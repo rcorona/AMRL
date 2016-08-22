@@ -60,7 +60,7 @@ $~$ Chenyun Wu$^{2}$ $~$ Samer Nashed$^{3}$ $~$ Joydeep Biswas$^{4}$ %<-this % s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-The ability to determine the location of a robot in its environment is a key requirement of autonomous robotics tasks. The particle filter algorithm, which may be used with various different combinations of sensors, is a common approach to this problem. Through the development of effective motion models for a skid-steered, outdoor robot, we have implemented a particle filter which may be used to test the effectiveness of a variety of sensors. Having tested the algorithm with a combination of odometry and GPS, we will explore methods from computer vision, such as convolutional neural networks (CNNs), for effectively incorporating video cameras as sensors. To this end, we have collected a data set of images mapped to locations on a variety of maps which vary in size and path complexity, something which will allow us to test both the efficacy and robustness of the methods we will explore.
+The ability to determine the location of a robot in its environment is a key requirement of autonomous robotics tasks. The particle filter algorithm, which may be used with various different combinations of sensors, is a common approach to this problem. Through the development of effective motion models for a skid-steered, outdoor robot, we have implemented a particle filter which may be used to test the effectiveness of a variety of sensors. Having tested the algorithm with a combination of odometry and GPS, we will explore methods from computer vision, such as convolutional neural networks (CNNs), for effectively incorporating video cameras as sensors. To this end, we have collected a data set of images mapped to locations which was used to run preliminary experiments of our methods. 
 
 \end{abstract}
 
@@ -134,7 +134,7 @@ Where $\textbf{x}^i$ and $w_i$ denote the $i$-th particle's pose estimate and we
 
 \subsection{Convolutional Neural Networks}
 
-A neural network (NN) is a model used for machine learning which represents a funciton $f:X\to Y$ mapping data points to labels. Generally, these models are used in order to classify data in tasks such as object recognition in images. 
+A neural network (NN) is a model used for machine learning which represents a function $f:X\to Y$ mapping data points to labels. Generally, these models are used in order to classify data in tasks such as object recognition in images. 
 \par
 In order to do this, a network takes a vector or tensor representation of data \textbf{x} as input (such as a $W\times H \times 3$ matrix for an image of dimensions $W\times H$ and the 3 RGB color channels) and performs a set of operations on it to generate its output. Each \textbf{layer} of a network consists of a set of \textbf{neurons}, with neurons at different layers having input/output connections to each other. Every neuron is assigned a weight vector, the weights of which must be learned using machine learning techniques, with each weight corresponding to each of its inputs from the previous layer.  
 
@@ -146,9 +146,9 @@ In order to do this, a network takes a vector or tensor representation of data \
 
 At each layer, a neuron will compute a dot product between its input vector and its weight vector, the result of which is then fed to the neurons at the next layer to which it is connected to. In more concrete terms, the model performs a matrix multiplication at each layer in order to derive its output. This basic neural network model is known as a \textbf{feed forward} architecture and is also generally implemented as a \textbf{fully connected} model in which the neurons in each layer will be connected to all of the neurons in the next. 
 \par
-It may be observed that as the size of the input (e.g. images) grows, the number of weights that must be learned in a network can quickly become intractable. Due to the growth in the number of learned parameters, the amount of training data required may also become infeasible. Furtheremore, in many cases, including images, much of the inputted information is redundant and need not all be processed for effective classification. Convolutional neural networks alleviate this problem by employing the use of \textbf{convlutional} and \textbf{pooling} layers in their architecture.
+It may be observed that as the size of the input (e.g. images) grows, the number of weights that must be learned in a network can quickly become intractable. Due to the growth in the number of learned parameters, the amount of training data required may also become infeasible. Furthermore, in many cases, including images, much of the inputted information is redundant and need not all be processed for effective classification. Convolutional neural networks alleviate this problem by employing the use of \textbf{convolutional} and \textbf{pooling} layers in their architecture.
 \par
-Instead of taking as input the entirity of an image, neurons in a convolutional layer will instead receive small patches, such as $3\times 3$ pixel patches, and convolve the values in this patch using  what is known as a \textbf{kernel function}. A kernel function used within a neuron is also known as a \textbf{filter} because each kernel function is constructed to detect the presence of different types of features in its input, such as edges, corners, or colors. In other words, neurons in a convolutional layer will output higher values, or become "activated", when they detect the presence of certain features. 
+Instead of taking as input the entirety of an image, neurons in a convolutional layer will instead receive small patches, such as $3\times 3$ pixel patches, and convolve the values in this patch using  what is known as a \textbf{kernel function}. A kernel function used within a neuron is also known as a \textbf{filter} because each kernel function is constructed to detect the presence of different types of features in its input, such as edges, corners, or colors. In other words, neurons in a convolutional layer will output higher values, or become "activated", when they detect the presence of certain features. 
 \par
 Neurons in a pooling layer will take input from neurons in convolutional layers and perform some form of downsampling on their input, which reduces the dimensionality of its output and results in a lower number of weights going forward to deeper layers. Similarly to the convolutional layers, neurons in this layer will be activated by the presence of certain features in the input, but are invariant to the ordering of the input with respects to factors such as orientation and translation. More precisely, whereas convolutional layer neurons seeks features in specific patches of the input, pooling layer neurons simply seek the presence of the features in the set of patches. This dynamic allows CNNs to detect objects in images independently of where they are located within them. 
 \par
@@ -170,7 +170,7 @@ Although a lower level description of CNNs is beyond the scope of this work, a m
 
 There has been much work done on indoor robot localization, in which the environments remain mostly static and do not vary in factors such as weather, lighting, and obstacle locations. The presence of walls also makes it much easier to use sensors such as laser-range finders \cite{laser_range}. 
 \par
-Outdoor localization, however, is complicated by many factors which can vary greatly based on time of day and season, amongst other things. Irie et al. propose a solution to this problem which uses stereo cameras in order to generate 2D point clouds of the environment \cite{irie2010mobile}. This method is used during data collection to create a global grid map of the robot's environment. During localization, point clouds are generated at each timestep and are used in two ways. Firstly, the motion of the robot is estimated using the changes in point clouds, something which serves as the motion model for their particle filter implementation. As a perceptual model, they compare the local point cloud to the global map that was generated during data collection in order to form a probability distribution for particle weighing. They claim that their methods are more resilient to changes in lighting than other approaches.
+Outdoor localization, however, is complicated by many factors which can vary greatly based on time of day and season, amongst other things. Irie et al. propose a solution to this problem which uses stereo cameras in order to generate 2D point clouds of the environment \cite{irie2010mobile}. This method is used during data collection to create a global grid map of the robot's environment. During localization, point clouds are generated at each time step and are used in two ways. Firstly, the motion of the robot is estimated using the changes in point clouds, something which serves as the motion model for their particle filter implementation. As a perceptual model, they compare the local point cloud to the global map that was generated during data collection in order to form a probability distribution for particle weighing. They claim that their methods are more resilient to changes in lighting than other approaches.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{point_clouds}
@@ -178,7 +178,7 @@ Outdoor localization, however, is complicated by many factors which can vary gre
 \end{figure}
 
 \par
-Similarly to Irie et al., Agrawal et al. use the Harris corner detection method \cite{Harris} along with stereo cameras in order to calculate movement between timesteps to serve as a motion model \cite{agrawal2006real}. Instead of using vision as a perceptual model, however, they use GPS sensors. Additionally, they implement a Kalman Filter for localization \cite{Kalman}.
+Similarly to Irie et al., Agrawal et al. use the Harris corner detection method \cite{Harris} along with stereo cameras in order to calculate movement between time steps to serve as a motion model \cite{agrawal2006real}. Instead of using vision as a perceptual model, however, they use GPS sensors. Additionally, they implement a Kalman Filter for localization \cite{Kalman}.
 
 \begin{figure}[h]
 \centering
@@ -196,12 +196,12 @@ Valgren et al. instead propose to use SIFT and SURF features for image matching 
 
 
 \par
-In our work, we propose to use neural networks to serve the role of a perceptual model. With enough training data, we believe that neural networks would be able to learn the invariant features of a map, which would allow them to be robust to different lighting and wheather conditions like point cloud methods as well as robust to variance in the set of objects in the environment like SIFT and SURF feature vectors. Furtheremore, CNNs do not require one to perform any feature engineering on the data, which not only cuts down development time, but may also make our methods robust to different environments which may have very different types of differentiating features. 
+In our work, we propose to use neural networks to serve the role of a perceptual model. With enough training data, we believe that neural networks would be able to learn the invariant features of a map, which would allow them to be robust to different lighting and weather conditions like point cloud methods as well as robust to variance in the set of objects in the environment like SIFT and SURF feature vectors. Furthermore, CNNs do not require one to perform any feature engineering on the data, which not only cuts down development time, but may also make our methods robust to different environments which may have very different types of differentiating features. 
 
 \section{Methodology}
 
 \subsection{Data Set}
-A roughly 280 meter path was chosen for use as a map for testing our methods. This path was traversed a total of 19 times throughout one week at different times of day in order to capture as much variability in daylight and wheather as possible. Through each run, data from all robot sensors was collected (e.g. GPS, cameras, wheel odometry, etc.), with data log files averaging roughly 2GB in size. 
+A roughly 280 meter path was chosen for use as a map for testing our methods. This path was traversed a total of 19 times throughout one week at different times of day in order to capture as much variability in daylight and weather as possible. Through each run, data from all robot sensors was collected (e.g. GPS, cameras, wheel odometry, etc.), with data log files averaging roughly 2GB in size. 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=01.0]{map}
@@ -211,7 +211,7 @@ A roughly 280 meter path was chosen for use as a map for testing our methods. Th
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.21]{Fisheye}
-\caption{An image collected for our data set using fisheye camera lenses.}
+\caption{An image collected for our data set using fish-eye camera lenses.}
 \end{figure}
 
 \subsection{Particle Filter Algorithm and Visualizer}
@@ -223,7 +223,7 @@ f(x_e,y_e,x_g,y_g)= \frac{1}{\sigma _{long}^2 + e^{|x_e-x_g|}}\cdot \frac{1}{\si
 $$
 Where $x_e$ and $y_e$ are position estimates and $g_x$ and $g_y$ are GPS position readings. This function was then used in order to assign a weight to each particle in the weighing step of the algorithm, where a greater distance from the GPS reading results in a lower weight being assigned.
 \par
-For generating a pose estimate at each timestep, the mean pose was taken from the set of particles in the filter. 
+For generating a pose estimate at each time step, the mean pose was taken from the set of particles in the filter. 
 \par
 In order to be able to qualitatively evaluate the particle filter implementation, the CMU Cobot \cite{cobot} localization visualizer was integrated into the system. Using the Cobot visualization library, the particle filter visualizer may take a log of saved sensor data from our data set and recreate it visually, effectively allowing the user to replay a run along the map. 
 
@@ -242,7 +242,7 @@ To this end, a pre-trained model of the AlexNet CNN architecture \cite{AlexNet},
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=1.0]{alexnet}
+\includegraphics[scale=0.4]{alexnet}
 \caption{The AlexNet CNN architecture. Features are extracted at each layer, starting from lower level features such as edges and colors, growing in abstraction to feature types such as partial objects. Image source: http://www.cc.gatech.edu/~hays/compvision/proj6/}
 \end{figure}
 
@@ -263,7 +263,7 @@ As a sanity check, the filter was first tested on synthetic odometry data which 
 \label{odometry_error}
 \end{figure}
 
-Following this, synthetic GPS data was added to this evaluation by giving a GPS reading at each timestep with coordinates matching the 2 meter per second rate of movement. As may be seen in figure \ref{with_gps}, the uncertainty of the run is greatly mitigated, with the distribution of particles clearly remaining within the GPS sensor's roughly 10 meter radius of uncertainty. 
+Following this, synthetic GPS data was added to this evaluation by giving a GPS reading at each time step with coordinates matching the 2 meter per second rate of movement. As may be seen in figure \ref{with_gps}, the uncertainty of the run is greatly mitigated, with the distribution of particles clearly remaining within the GPS sensor's roughly 10 meter radius of uncertainty. 
 
 \begin{figure}[h]
 \centering
@@ -280,7 +280,7 @@ Because classification algorithms operate on a discrete set of possible values, 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.95]{clustering}
-\caption{A visualization of the classes generated on our dataset through K-Means clustering using cartesian coordinates in meters. Each colored patch denotes a different class, the average distance of GPS points in our data set to the nearest cluster center was 5.53 meters.}
+\caption{A visualization of the classes generated on our dataset through K-Means clustering using Cartesian coordinates in meters. Each colored patch denotes a different class, the average distance of GPS points in our data set to the nearest cluster center was 5.53 meters.}
 \label{clustering}
 \end{figure}
 
@@ -333,14 +333,18 @@ Because the same path was followed each time data was collected on our map, it i
 \par
 Another factor that proved too problematic in the methodology was the data collection step. Because neural networks need large amounts of data to train, images were collected from many runs, a process which took approximately a week for a 280 meter path. Because a long-term goal of the project is to be able to create a map of the entire campus, this method of collecting data would prove to be too time consuming, necessitating different methods. 
 \par
-For the reasons deleniated above, it was determined that a first alternative to explore would be the use of satellite imagery. We believe that an efficient method of mapping ground images to their respective patch of a satellite image would prove fruitful for our goals, since such a method might not require as large an amount of training data to derive a sufficiently accurate location probability distribution.  
+For the reasons delineated above, it was determined that a first alternative to explore would be the use of satellite imagery. We believe that an efficient method of mapping ground images to their respective patch of a satellite image would prove fruitful for our goals, since such a method might not require as large an amount of training data to derive a sufficiently accurate location probability distribution.  
 
 \section{conclusion}
 
-A particle filter was implemented for use with the Jackal robot's GPS and internal wheel odometry sensors. Furtheremore, the filter was integrated with visualization software which allowed for a qualitative analysis of the algorithm. Preliminary methods for developing a visual perceptual model using CNNs were explored and it was determined that the methods were too inaccurate and time consuming for the long-term goals of the project. For future work, we plan on exploring methods of aleviating these problems, such as using satellite imagery, in order to derive a robust visual perceptual model which will allow for outdoor localization around campus and other outdoor environments. 
+A particle filter was implemented for use with the Jackal robot's GPS and internal wheel odometry sensors. Furthermore, the filter was integrated with visualization software which allowed for a qualitative analysis of the algorithm. Preliminary methods for developing a visual perceptual model using CNNs were explored and it was determined that the methods were too inaccurate and time consuming for the long-term goals of the project. For future work, we plan on exploring methods of alleviating these problems, such as using satellite imagery, in order to derive a robust visual perceptual model which will allow for outdoor localization around campus and other outdoor environments. 
+
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
+
+\newpage
 
 \section*{Appendix}
 
@@ -354,7 +358,7 @@ The GPS conversion node uses a latitude and longitude value to set an origin in 
 
 \subsection{Cameras and Image Preprocessing}
 
-For image data collection, two Point Grey\footnote{https://www.ptgrey.com/} fisheye cameras with fisheye lenses were used due to the fisheye lense's wide field of view. 
+For image data collection, two Point Grey\footnote{https://www.ptgrey.com/} fish-eye cameras with fish-eye lenses were used due to the fish-eye lenses' wide field of view. 
 \par
 Because the AlexNet CNN architecture expects square images of size $224\times 224$, the OpenCV\footnote{http://opencv.org/} library was used in order to undistort the images and resize them to the correct resolution. 
 

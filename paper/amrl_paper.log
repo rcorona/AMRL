@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  22 AUG 2016 10:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  22 AUG 2016 11:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -423,11 +423,8 @@ File: cnn.png Graphic file (type png)
 <use cnn.png>
 Package pdftex.def Info: cnn.png used on input line 160.
 (pdftex.def)             Requested size: 430.71558pt x 259.62383pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<point_clouds.png, id=29, 956.57375pt x 455.7025pt>
+ [5 <./cnn.png>]
+<point_clouds.png, id=32, 956.57375pt x 455.7025pt>
 File: point_clouds.png Graphic file (type png)
  <use point_clouds.png>
 Package pdftex.def Info: point_clouds.png used on input line 176.
@@ -437,10 +434,7 @@ Overfull \hbox (8.53069pt too wide) in paragraph at lines 176--177
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5] <Stereo.PNG, id=33, 234.37563pt x 206.27063pt>
+<Stereo.PNG, id=33, 234.37563pt x 206.27063pt>
 File: Stereo.PNG Graphic file (type png)
  <use Stereo.PNG>
 Package pdftex.def Info: Stereo.PNG used on input line 185.
@@ -458,7 +452,7 @@ Package pdftex.def Info: sift.jpg used on input line 193.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<map.jpg, id=35, 460.63pt x 164.25pt>
+[6 <./point_clouds.png>] <map.jpg, id=38, 460.63pt x 164.25pt>
 File: map.jpg Graphic file (type jpg)
  <use map.jpg>
 Package pdftex.def Info: map.jpg used on input line 207.
@@ -467,7 +461,7 @@ Package pdftex.def Info: map.jpg used on input line 207.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Fisheye.jpg, id=36, 1927.2pt x 1204.5pt>
+<Fisheye.jpg, id=39, 1927.2pt x 1204.5pt>
 File: Fisheye.jpg Graphic file (type jpg)
  <use Fisheye.jpg>
 Package pdftex.def Info: Fisheye.jpg used on input line 213.
@@ -476,7 +470,7 @@ Package pdftex.def Info: Fisheye.jpg used on input line 213.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6 <./cnn.png>] <particle_filter_visual.png, id=40, 316.18124pt x 200.75pt>
+[7 <./Stereo.PNG>] <particle_filter_visual.png, id=45, 316.18124pt x 200.75pt>
 File: particle_filter_visual.png Graphic file (type png)
 
 <use particle_filter_visual.png>
@@ -486,12 +480,11 @@ Package pdftex.def Info: particle_filter_visual.png used on input line 232.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[7 <./point_clouds.png>] <alexnet.jpg, id=45, 300.12125pt x 168.63pt>
-File: alexnet.jpg Graphic file (type jpg)
-
-<use alexnet.jpg>
-Package pdftex.def Info: alexnet.jpg used on input line 245.
-(pdftex.def)             Requested size: 300.12051pt x 168.62958pt.
+<alexnet.png, id=46, 1064.778pt x 490.9542pt>
+File: alexnet.png Graphic file (type png)
+ <use alexnet.png>
+Package pdftex.def Info: alexnet.png used on input line 245.
+(pdftex.def)             Requested size: 425.90366pt x 196.37819pt.
 
 Underfull \hbox (badness 2035) in paragraph at lines 246--246
 \OT1/ptm/m/n/9 Fig. 10.   The AlexNet CNN ar-chi-tec-ture. Fea-tures are ex-tra
@@ -507,16 +500,21 @@ a-ture types such as par-tial ob-jects. Im-age source:
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<NO_GPS.png, id=46, 401.5pt x 301.125pt>
+
+Underfull \vbox (badness 1281) has occurred while \output is active []
+
+ [8 <./sift.jpg>] [9 <./map.jpg> <./Fisheye.jpg>] <NO_GPS.png, id=53, 401.5pt x
+ 301.125pt>
 File: NO_GPS.png Graphic file (type png)
- <use NO_GPS.png>
+
+<use NO_GPS.png>
 Package pdftex.def Info: NO_GPS.png used on input line 261.
 (pdftex.def)             Requested size: 401.49901pt x 301.12425pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<With_GPS.png, id=47, 401.5pt x 301.125pt>
+<With_GPS.png, id=54, 401.5pt x 301.125pt>
 File: With_GPS.png Graphic file (type png)
  <use With_GPS.png>
 Package pdftex.def Info: With_GPS.png used on input line 270.
@@ -525,10 +523,9 @@ Package pdftex.def Info: With_GPS.png used on input line 270.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[8 <./Stereo.PNG>] <clustering.png, id=52, 462.72874pt x 261.97874pt>
+<clustering.png, id=55, 462.72874pt x 261.97874pt>
 File: clustering.png Graphic file (type png)
-
-<use clustering.png>
+ <use clustering.png>
 Package pdftex.def Info: clustering.png used on input line 282.
 (pdftex.def)             Requested size: 439.58981pt x 248.87839pt.
 
@@ -538,7 +535,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<error_pool5.png, id=53, 1156.32pt x 590.4459pt>
+<error_pool5.png, id=56, 1156.32pt x 590.4459pt>
 File: error_pool5.png Graphic file (type png)
  <use error_pool5.png>
 Package pdftex.def Info: error_pool5.png used on input line 314.
@@ -547,7 +544,7 @@ Package pdftex.def Info: error_pool5.png used on input line 314.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<heatmap_knn.png, id=54, 2611.356pt x 1862.157pt>
+<heatmap_knn.png, id=57, 2611.356pt x 1862.157pt>
 File: heatmap_knn.png Graphic file (type png)
  <use heatmap_knn.png>
 Package pdftex.def Info: heatmap_knn.png used on input line 324.
@@ -556,11 +553,9 @@ Package pdftex.def Info: heatmap_knn.png used on input line 324.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[9 <./sift.jpg>] [10 <./map.jpg> <./Fisheye.jpg>] [11 <./particle_filter_visual
-.png (PNG copy)> <./alexnet.jpg>] (./amrl_paper.bbl [12 <./NO_GPS.png>])
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [13 <./With_GPS.png>] [14 <./clustering.png>]
+[10 <./particle_filter_visual.png (PNG copy)>] [11 <./alexnet.png>] [12 <./NO_G
+PS.png>] (./amrl_paper.bbl [13 <./With_GPS.png>]) [14 <./clustering.png>]
+[15 <./error_pool5.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -572,28 +567,28 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[15 <./error_pool5.png>] [16 <./heatmap_knn.png>] (./amrl_paper.aux) ) 
+[16 <./heatmap_knn.png>] (./amrl_paper.aux) ) 
 Here is how much of TeX's memory you used:
  3454 strings out of 494985
  50404 string characters out of 6180356
- 121342 words of memory out of 5000000
+ 120342 words of memory out of 5000000
  6580 multiletter control sequences out of 15000+600000
  61233 words of font info for 123 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  38i,14n,32p,1157b,257s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/sha
-re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/
-usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/times/utmri8a.pfb>
-Output written on amrl_paper.pdf (16 pages, 7378697 bytes).
+{/usr/share/texlive/texmf-dist/fon
+ts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
+times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.p
+fb>
+Output written on amrl_paper.pdf (16 pages, 13053389 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
+ 117 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  76 words of extra memory for PDF output out of 10000 (max. 10000000)
