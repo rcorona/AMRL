@@ -7,6 +7,11 @@ Motilal Agrawal and Kurt Konolige.
 \newblock In {\em 18th International Conference on Pattern Recognition
   (ICPR'06)}, volume~3, pages 1063--1068. IEEE, 2006.
 
+\bibitem{alsabti1997efficient}
+Khaled Alsabti, Sanjay Ranka, and Vineet Singh.
+\newblock An efficient k-means clustering algorithm.
+\newblock 1997.
+
 \bibitem{surf}
 Herbert Bay, Tinne Tuytelaars, and Luc Van~Gool.
 \newblock Surf: Speeded up robust features.
@@ -17,6 +22,11 @@ Herbert Bay, Tinne Tuytelaars, and Luc Van~Gool.
 Ian Goodfellow~Yoshua Bengio and Aaron Courville.
 \newblock Deep learning.
 \newblock Book in preparation for MIT Press, 2016.
+
+\bibitem{cover1967nearest}
+Thomas Cover and Peter Hart.
+\newblock Nearest neighbor pattern classification.
+\newblock {\em IEEE transactions on information theory}, 13(1):21--27, 1967.
 
 \bibitem{Harris}
 Chris Harris and Mike Stephens.

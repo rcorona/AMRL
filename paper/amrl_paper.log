@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  22 AUG 2016 07:58
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.8.18)  22 AUG 2016 10:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -192,35 +192,97 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 373.
 Package: cite 2010/09/10  v 5.3
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count104
+\Gm@cntv=\count105
+\c@Gm@tempcnt=\count106
+\Gm@bindingoffset=\dimen124
+\Gm@wd@mp=\dimen125
+\Gm@odd@mp=\dimen126
+\Gm@even@mp=\dimen127
+\Gm@layoutwidth=\dimen128
+\Gm@layoutheight=\dimen129
+\Gm@layouthoffset=\dimen130
+\Gm@layoutvoffset=\dimen131
+\Gm@dimlist=\toks21
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2005/04/12 PSNFSS-v9.2a Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
 ) (./amrl_paper.aux)
 \openout1 = `amrl_paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count104
-\scratchdimen=\dimen124
+\scratchcounter=\count107
+\scratchdimen=\dimen132
 \scratchbox=\box29
-\nofMPsegments=\count105
-\nofMParguments=\count106
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count107
-\MPscratchDim=\dimen125
-\MPnumerator=\count108
-\makeMPintoPDFobject=\count109
-\everyMPtoPDFconversion=\toks22
+\nofMPsegments=\count108
+\nofMParguments=\count109
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count110
+\MPscratchDim=\dimen133
+\MPnumerator=\count111
+\makeMPintoPDFobject=\count112
+\everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -228,10 +290,6 @@ Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
-)
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
@@ -269,85 +327,182 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Calculating math sizes for size <14> on input line 51.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=0.0pt
+* \headheight=0.0pt
+* \headsep=0.0pt
+* \topskip=13.92pt
+* \footskip=28.90755pt
+* \marginparwidth=20.0pt
+* \marginparsep=10.0pt
+* \columnsep=14.45377pt
+* \skip\footins=12.52791pt plus 5.5679pt minus 2.78395pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--70
-[][][]\OT1/ptm/m/n/9 https://www.clearpathrobotics.com/jackal-small-unmanned-
- []
+LaTeX Font Info:    Calculating math sizes for size <14> on input line 55.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 55
+.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 55
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 55
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 55
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.36008> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.40009> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 55.
 
 <JackalPose.jpeg, id=1, 3276.24pt x 2457.18pt>
 File: JackalPose.jpeg Graphic file (type jpg)
  <use JackalPose.jpeg>
-Package pdftex.def Info: JackalPose.jpeg used on input line 74.
-(pdftex.def)             Requested size: 229.36023pt x 172.02017pt.
+Package pdftex.def Info: JackalPose.jpeg used on input line 78.
+(pdftex.def)             Requested size: 491.41481pt x 368.5611pt.
 
-Underfull \vbox (badness 3735) has occurred while \output is active []
-
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-
- <./JackalPose.jpeg>]
-Underfull \hbox (badness 3460) in paragraph at lines 104--105
-[]\OT1/ptm/m/n/12 To ac-com-plish this, the al-go-rithm it-er-ates
+Overfull \hbox (21.65979pt too wide) in paragraph at lines 78--79
+ [][] 
  []
-
-[2] <neural_net.png, id=23, 562.1pt x 280.04625pt>
-File: neural_net.png Graphic file (type png)
- <use neural_net.png>
-Package pdftex.def Info: neural_net.png used on input line 139.
-(pdftex.def)             Requested size: 241.69829pt x 120.41753pt.
-
-Underfull \vbox (badness 1895) has occurred while \output is active []
-
- [3 <./neural_net.png>] <cnn.png, id=29, 1230.5975pt x 741.77126pt>
-File: cnn.png Graphic file (type png)
- <use cnn.png>
-Package pdftex.def Info: cnn.png used on input line 156.
-(pdftex.def)             Requested size: 184.58167pt x 111.26088pt.
-
-<point_clouds.png, id=30, 956.57375pt x 455.7025pt>
-File: point_clouds.png Graphic file (type png)
- <use point_clouds.png>
-Package pdftex.def Info: point_clouds.png used on input line 172.
-(pdftex.def)             Requested size: 239.14285pt x 113.92534pt.
-
-<Stereo.PNG, id=31, 234.37563pt x 206.27063pt>
-File: Stereo.PNG Graphic file (type png)
- <use Stereo.PNG>
-Package pdftex.def Info: Stereo.PNG used on input line 181.
-(pdftex.def)             Requested size: 175.78127pt x 154.70258pt.
- [4 <./cnn.png> <./point_clouds.png> <./Stereo.PNG>]
-<sift.jpg, id=39, 1505.625pt x 928.46875pt>
-File: sift.jpg Graphic file (type jpg)
- <use sift.jpg>
-Package pdftex.def Info: sift.jpg used on input line 189.
-(pdftex.def)             Requested size: 225.834pt x 139.2643pt.
-
-<map.jpg, id=40, 460.63pt x 164.25pt>
-File: map.jpg Graphic file (type jpg)
- <use map.jpg>
-Package pdftex.def Info: map.jpg used on input line 203.
-(pdftex.def)             Requested size: 230.31444pt x 82.12479pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<particle_filter_visual.png, id=41, 316.18124pt x 200.75pt>
+[1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./JackalPose.jpeg>]
+[3] <neural_net.png, id=22, 562.1pt x 280.04625pt>
+File: neural_net.png Graphic file (type png)
+ <use neural_net.png>
+Package pdftex.def Info: neural_net.png used on input line 143.
+(pdftex.def)             Requested size: 421.57397pt x 210.03415pt.
+
+[4 <./neural_net.png>] <cnn.png, id=28, 1230.5975pt x 741.77126pt>
+File: cnn.png Graphic file (type png)
+
+<use cnn.png>
+Package pdftex.def Info: cnn.png used on input line 160.
+(pdftex.def)             Requested size: 430.71558pt x 259.62383pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<point_clouds.png, id=29, 956.57375pt x 455.7025pt>
+File: point_clouds.png Graphic file (type png)
+ <use point_clouds.png>
+Package pdftex.def Info: point_clouds.png used on input line 176.
+(pdftex.def)             Requested size: 478.2857pt x 227.85068pt.
+
+Overfull \hbox (8.53069pt too wide) in paragraph at lines 176--177
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5] <Stereo.PNG, id=33, 234.37563pt x 206.27063pt>
+File: Stereo.PNG Graphic file (type png)
+ <use Stereo.PNG>
+Package pdftex.def Info: Stereo.PNG used on input line 185.
+(pdftex.def)             Requested size: 234.37503pt x 206.27011pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<sift.jpg, id=34, 1505.625pt x 928.46875pt>
+File: sift.jpg Graphic file (type jpg)
+ <use sift.jpg>
+Package pdftex.def Info: sift.jpg used on input line 193.
+(pdftex.def)             Requested size: 451.691pt x 278.54277pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<map.jpg, id=35, 460.63pt x 164.25pt>
+File: map.jpg Graphic file (type jpg)
+ <use map.jpg>
+Package pdftex.def Info: map.jpg used on input line 207.
+(pdftex.def)             Requested size: 460.62888pt x 164.24959pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<Fisheye.jpg, id=36, 1927.2pt x 1204.5pt>
+File: Fisheye.jpg Graphic file (type jpg)
+ <use Fisheye.jpg>
+Package pdftex.def Info: Fisheye.jpg used on input line 213.
+(pdftex.def)             Requested size: 404.72395pt x 252.95247pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6 <./cnn.png>] <particle_filter_visual.png, id=40, 316.18124pt x 200.75pt>
 File: particle_filter_visual.png Graphic file (type png)
 
 <use particle_filter_visual.png>
-Package pdftex.def Info: particle_filter_visual.png used on input line 222.
-(pdftex.def)             Requested size: 221.32535pt x 140.52403pt.
+Package pdftex.def Info: particle_filter_visual.png used on input line 232.
+(pdftex.def)             Requested size: 316.18047pt x 200.7495pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[5 <./sift.jpg> <./map.jpg>] <alexnet.jpg, id=45, 300.12125pt x 168.63pt>
+[7 <./point_clouds.png>] <alexnet.jpg, id=45, 300.12125pt x 168.63pt>
 File: alexnet.jpg Graphic file (type jpg)
 
 <use alexnet.jpg>
-Package pdftex.def Info: alexnet.jpg used on input line 235.
-(pdftex.def)             Requested size: 210.08344pt x 118.04018pt.
+Package pdftex.def Info: alexnet.jpg used on input line 245.
+(pdftex.def)             Requested size: 300.12051pt x 168.62958pt.
+
+Underfull \hbox (badness 2035) in paragraph at lines 246--246
+\OT1/ptm/m/n/9 Fig. 10.   The AlexNet CNN ar-chi-tec-ture. Fea-tures are ex-tra
+cted at each layer, start-ing from lower level fea-
+ []
+
+
+Underfull \hbox (badness 2426) in paragraph at lines 246--246
+\OT1/ptm/m/n/9 tures such as edges and col-ors, grow-ing in ab-strac-tion to fe
+a-ture types such as par-tial ob-jects. Im-age source:
+ []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -355,30 +510,39 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <NO_GPS.png, id=46, 401.5pt x 301.125pt>
 File: NO_GPS.png Graphic file (type png)
  <use NO_GPS.png>
-Package pdftex.def Info: NO_GPS.png used on input line 251.
-(pdftex.def)             Requested size: 240.90184pt x 180.67638pt.
- [6 <./particle_filter_visual.png (PNG copy)> <./alexnet.jpg> <./NO_GPS.png>]
-<With_GPS.png, id=51, 401.5pt x 301.125pt>
+Package pdftex.def Info: NO_GPS.png used on input line 261.
+(pdftex.def)             Requested size: 401.49901pt x 301.12425pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<With_GPS.png, id=47, 401.5pt x 301.125pt>
 File: With_GPS.png Graphic file (type png)
  <use With_GPS.png>
-Package pdftex.def Info: With_GPS.png used on input line 260.
-(pdftex.def)             Requested size: 240.90184pt x 180.67638pt.
+Package pdftex.def Info: With_GPS.png used on input line 270.
+(pdftex.def)             Requested size: 361.34665pt x 271.00998pt.
 
-<clustering.png, id=52, 462.72874pt x 261.97874pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8 <./Stereo.PNG>] <clustering.png, id=52, 462.72874pt x 261.97874pt>
 File: clustering.png Graphic file (type png)
- <use clustering.png>
-Package pdftex.def Info: clustering.png used on input line 272.
-(pdftex.def)             Requested size: 231.3638pt x 130.98904pt.
+
+<use clustering.png>
+Package pdftex.def Info: clustering.png used on input line 282.
+(pdftex.def)             Requested size: 439.58981pt x 248.87839pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 <error_pool5.png, id=53, 1156.32pt x 590.4459pt>
 File: error_pool5.png Graphic file (type png)
  <use error_pool5.png>
-Package pdftex.def Info: error_pool5.png used on input line 304.
-(pdftex.def)             Requested size: 265.948pt x 135.7997pt.
-
-Overfull \hbox (20.22989pt too wide) in paragraph at lines 304--305
- [][] 
- []
+Package pdftex.def Info: error_pool5.png used on input line 314.
+(pdftex.def)             Requested size: 416.27489pt x 212.56036pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -386,19 +550,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <heatmap_knn.png, id=54, 2611.356pt x 1862.157pt>
 File: heatmap_knn.png Graphic file (type png)
  <use heatmap_knn.png>
-Package pdftex.def Info: heatmap_knn.png used on input line 314.
-(pdftex.def)             Requested size: 208.91275pt x 148.9756pt.
+Package pdftex.def Info: heatmap_knn.png used on input line 324.
+(pdftex.def)             Requested size: 313.3492pt x 223.44919pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[7 <./With_GPS.png> <./clustering.png>] (./amrl_paper.bbl [8 <./error_pool5.png
-> <./heatmap_knn.png>]
-Underfull \hbox (badness 1701) in paragraph at lines 53--58
-[]\OT1/ptm/m/n/9 Viet Nguyen, Agostino Mar-tinelli, Nicola Toma-tis, and
- []
+[9 <./sift.jpg>] [10 <./map.jpg> <./Fisheye.jpg>] [11 <./particle_filter_visual
+.png (PNG copy)> <./alexnet.jpg>] (./amrl_paper.bbl [12 <./NO_GPS.png>])
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-)
+ [13 <./With_GPS.png>] [14 <./clustering.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -410,37 +572,29 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the US letter (8.5in X 11in) paper size.
 
-[9
-
-] (./amrl_paper.aux) ) 
+[15 <./error_pool5.png>] [16 <./heatmap_knn.png>] (./amrl_paper.aux) ) 
 Here is how much of TeX's memory you used:
- 2880 strings out of 494985
- 41771 string characters out of 6180356
- 106000 words of memory out of 5000000
- 6044 multiletter control sequences out of 15000+600000
- 43651 words of font info for 86 fonts, out of 8000000 for 9000
+ 3454 strings out of 494985
+ 50404 string characters out of 6180356
+ 121342 words of memory out of 5000000
+ 6580 multiletter control sequences out of 15000+600000
+ 61233 words of font info for 123 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,14n,23p,1157b,285s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.en
-c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
-times/utmri8a.pfb>
-Output written on amrl_paper.pdf (9 pages, 7288109 bytes).
+ 38i,14n,32p,1157b,257s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/sha
+re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/
+usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on amrl_paper.pdf (16 pages, 7378697 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 116 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

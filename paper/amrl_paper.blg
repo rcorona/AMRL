@@ -3,44 +3,46 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: amrl_paper.aux
 The style file: plain.bst
 Database file #1: bibliography.bib
-You've used 13 entries,
+Warning--empty journal in alsabti1997efficient
+You've used 15 entries,
             2118 wiz_defined-function locations,
-            581 strings with 6505 characters,
-and the built_in function-call counts, 5687 in all, are:
-= -- 597
-> -- 225
+            592 strings with 6756 characters,
+and the built_in function-call counts, 6274 in all, are:
+= -- 654
+> -- 256
 < -- 9
-+ -- 90
-- -- 74
-* -- 356
-:= -- 854
-add.period$ -- 46
-call.type$ -- 13
-change.case$ -- 73
++ -- 103
+- -- 84
+* -- 397
+:= -- 957
+add.period$ -- 52
+call.type$ -- 15
+change.case$ -- 84
 chr.to.int$ -- 0
-cite$ -- 13
-duplicate$ -- 248
-empty$ -- 458
-format.name$ -- 74
-if$ -- 1276
+cite$ -- 16
+duplicate$ -- 269
+empty$ -- 500
+format.name$ -- 84
+if$ -- 1392
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 12
-newline$ -- 68
-num.names$ -- 28
-pop$ -- 91
+int.to.str$ -- 15
+missing$ -- 14
+newline$ -- 78
+num.names$ -- 32
+pop$ -- 102
 preamble$ -- 1
-purify$ -- 60
+purify$ -- 69
 quote$ -- 0
-skip$ -- 200
+skip$ -- 215
 stack$ -- 0
-substring$ -- 421
-swap$ -- 103
+substring$ -- 451
+swap$ -- 104
 text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 52
-warning$ -- 0
-while$ -- 57
-width$ -- 15
-write$ -- 151
+type$ -- 60
+warning$ -- 1
+while$ -- 63
+width$ -- 17
+write$ -- 171
+(There was 1 warning)
