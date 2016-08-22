@@ -49,6 +49,20 @@ David~G Lowe.
 \newblock Distinctive image features from scale-invariant keypoints.
 \newblock {\em International journal of computer vision}, 60(2):91--110, 2004.
 
+\bibitem{laser_range}
+Viet Nguyen, Agostino Martinelli, Nicola Tomatis, and Roland Siegwart.
+\newblock A comparison of line extraction algorithms using 2d laser rangefinder
+  for indoor mobile robotics.
+\newblock In {\em 2005 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 1929--1934. IEEE, 2005.
+
+\bibitem{thrun2002particle}
+Sebastian Thrun.
+\newblock Particle filters in robotics.
+\newblock In {\em Proceedings of the Eighteenth conference on Uncertainty in
+  artificial intelligence}, pages 511--518. Morgan Kaufmann Publishers Inc.,
+  2002.
+
 \bibitem{thrun2002robotic}
 Sebastian Thrun et~al.
 \newblock Robotic mapping: A survey.
